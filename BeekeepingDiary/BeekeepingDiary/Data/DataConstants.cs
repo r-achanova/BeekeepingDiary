@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace BeekeepingDiary.Data
+﻿namespace BeekeepingDiary.Data
 {
     public class DataConstants
     {
@@ -14,7 +9,12 @@ namespace BeekeepingDiary.Data
             public const int LocationMinLength = 2;
             public const int LocationMaxLength = 40;
             public const int DescriptionMinLength = 10;
-            
+        }
+
+        public class Category
+        {
+            public const int NameMinLength = 2;
+            public const int NameMaxLength = 20;
         }
 
         public class Beehive

@@ -6,18 +6,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using BeekeepingDiary.Data.Models;
 
-namespace BeekeepingDiary.Models.Beehive
+namespace BeekeepingDiary.Models.Beehives
 {
     public class AddBeehiveFormModel
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]
         public string Name { get; init; }
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
-
-        public int BeeGardenId { get; set; }
-        public BeeGarden BeeGarden { get; set; }
+        
 
         [Required]
         [Url]
@@ -25,7 +21,15 @@ namespace BeekeepingDiary.Models.Beehive
         public string ImageUrl { get; init; }
 
         public int Year { get; set; }
-        public IEnumerable<Inspection> Inspections { get; init; } = new List<Inspection>();
-        public IEnumerable<Produce> Produces { get; init; } = new List<Produce>();
+
+        [Display(Name = "Category")]
+        public int CategoryId { get; init; }
+
+        public IEnumerable<BeehiveCategoryViewModel> Categories { get; set; }
+
+        [Display(Name = "Bee-garden")]
+        public int BeeGardenId { get; init; }
+
+        public IEnumerable<BeeGardenViewModel> BeeGardens { get; set; }
     }
 }

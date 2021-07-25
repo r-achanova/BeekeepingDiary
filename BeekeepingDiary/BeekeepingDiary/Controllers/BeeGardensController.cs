@@ -19,6 +19,32 @@ namespace BeekeepingDiary.Controllers
         {
             this.data = data;
         }
+        [Authorize]
+        public IActionResult All([FromQuery] AllBeeGardensQueryModel query)
+        {
+            var beeGardensQuery = this.data.BeeGardens.AsQueryable();
+            beeGardensQuery = beeGardensQuery.OrderByDescending(b => b.Year);
+            var totalBeeGardens = beeGardensQuery.Count();
+
+            var beeGardens = beeGardensQuery
+            .Skip((query.CurrentPage - 1) * AllBeeGardensQueryModel.BeeGardensPerPage)
+            .Take(AllBeeGardensQueryModel.BeeGardensPerPage)
+            .Select(c => new BeeGardenListingViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Location = c.Location,
+                Year = c.Year,
+                ImageUrl = c.ImageUrl,
+            })
+            .ToList();
+
+            query.TotalBeeGardens = totalBeeGardens;
+            query.BeeGardens = beeGardens;
+
+            return View(query);
+        }
+
 
         [Authorize]
         public IActionResult Add()

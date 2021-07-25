@@ -1,8 +1,53 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IndexViewModel
+
+@{
+    ViewData["Title"] = "Welcome!";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@if (!Model.BeeGardens.Any())
+{
+<div class="jumbotron">
+    <h1 class="display-4">Welcome to the bee-garden diary!</h1>
+    <p class="lead">There are no bee-gardens in the system currently available so why don't you just add one?</p>
+    <hr class="my-4">
+    <p class="lead">
+        <a asp-controller="BeeGarden" asp-action="Add" class="btn btn-primary btn-lg" role="button">Add Bee-garden</a>
+    </p>
+</div>}
+
+<div class="mb-5"></div>
+
+<div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        @for (int i = 0; i < Model.BeeGardens.Count; i++)
+        {
+            var beeGarden = Model.BeeGardens[i];
+<div class="carousel-item @(i == 0 ? "active" : string.Empty)">
+    <img class="d-block w-100" src="@beeGarden.ImageUrl" alt="@beeGarden.Name @beeGarden.Location">
+    <div class="carousel-caption d-none d-md-block">
+        <h5><a class="btn btn-primary" asp-controller="BeeGarden" asp-action="Details" asp-route-id="@beeGarden.Id">@beeGarden.Year  @beeGarden.Name @beeGarden.Location</a></h5>
+    </div>
+</div>}
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
+
+<div class="mb-5"></div>
+
+<div class="jumbotron">
+    <div class="row">
+        <h2 class="col-md-6 text-center">
+            @Model.TotalBeeGardens BeeGardens
+        </h2>
+        <h2 class="col-md-6 text-center">
+            @Model.TotalUsers Users
+        </h2>
+    </div>
 </div>

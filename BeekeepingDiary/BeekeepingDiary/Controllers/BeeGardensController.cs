@@ -1,6 +1,7 @@
 ﻿using BeekeepingDiary.Data;
 using BeekeepingDiary.Data.Models;
 using BeekeepingDiary.Models.BeeGardens;
+using BeekeepingDiary.Services.BeeGardens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,34 +14,24 @@ namespace BeekeepingDiary.Controllers
 {
     public class BeeGardensController : Controller
     {
+        private readonly IBeeGardenService beeGardens;
         private readonly BeekeepingDbContext data;
 
-        public BeeGardensController(BeekeepingDbContext data)
+        public BeeGardensController(IBeeGardenService beeGardens, BeekeepingDbContext data)
         {
+            this.beeGardens = beeGardens;
             this.data = data;
         }
         [Authorize]
         public IActionResult All([FromQuery] AllBeeGardensQueryModel query)
         {
-            var beeGardensQuery = this.data.BeeGardens.AsQueryable();
-            beeGardensQuery = beeGardensQuery.OrderByDescending(b => b.Year);
-            var totalBeeGardens = beeGardensQuery.Count();
+            var queryResult = this.beeGardens.All(
+                query.CurrentPage,
+                AllBeeGardensQueryModel.BeeGardensPerPage);
 
-            var beeGardens = beeGardensQuery
-            .Skip((query.CurrentPage - 1) * AllBeeGardensQueryModel.BeeGardensPerPage)
-            .Take(AllBeeGardensQueryModel.BeeGardensPerPage)
-            .Select(c => new BeeGardenListingViewModel
-            {
-                Id = c.Id,
-                Name = c.Name,
-                Location = c.Location,
-                Year = c.Year,
-                ImageUrl = c.ImageUrl,
-            })
-            .ToList();
 
-            query.TotalBeeGardens = totalBeeGardens;
-            query.BeeGardens = beeGardens;
+            query.TotalBeeGardens = queryResult.TotalBeeGardens;
+            query.BeeGardens = queryResult.BeeGardens;
 
             return View(query);
         }

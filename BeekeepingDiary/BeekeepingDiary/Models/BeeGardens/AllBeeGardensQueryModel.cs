@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BeekeepingDiary.Services.BeeGardens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace BeekeepingDiary.Models.BeeGardens
 
         public int TotalBeeGardens { get; set; }
 
-        public IEnumerable<BeeGardenListingViewModel> BeeGardens { get; set; }
+        public IEnumerable<BeeGardenServiceModel> BeeGardens { get; set; }
     }
 }
 

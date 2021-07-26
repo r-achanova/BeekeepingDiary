@@ -1,6 +1,7 @@
 using BeekeepingDiary.Data;
 using BeekeepingDiary.Data.Models;
 using BeekeepingDiary.Infrastructure;
+using BeekeepingDiary.Services.Statistics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -41,6 +42,7 @@ namespace BeekeepingDiary
                 .AddEntityFrameworkStores<BeekeepingDbContext>();
             
             services.AddControllersWithViews();
+            services.AddTransient<IStatisticsService, StatisticsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

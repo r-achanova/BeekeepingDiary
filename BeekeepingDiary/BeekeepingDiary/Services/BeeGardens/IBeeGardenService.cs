@@ -11,7 +11,7 @@ namespace BeekeepingDiary.Services.BeeGardens
             int currentPage,
             int beeGardensPerPage,
             string userId);
-        IEnumerable<BeeGardenServiceModel> ByUser(string userId);
+       // IEnumerable<BeeGardenServiceModel> ByUser(string userId);
 
     }
 }

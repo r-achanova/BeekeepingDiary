@@ -17,14 +17,13 @@ namespace BeekeepingDiary.Services.BeeGardens
 
         public BeeGardenQueryServiceModel All(int currentPage, int beeGardensPerPage, string userId)
         {
-            var beeGardensQuery = this.data.BeeGardens.AsQueryable();
+            var beeGardensQuery = this.data.BeeGardens.Where(b => b.UserId == userId).AsQueryable();
             beeGardensQuery = beeGardensQuery.OrderByDescending(b => b.Year);
             var totalBeeGardens = beeGardensQuery.Count();
 
             var beeGardens = beeGardensQuery
             .Skip((currentPage - 1) * beeGardensPerPage)
             .Take(beeGardensPerPage)
-            .Where(b => b.UserId == userId)
             .Select(b => new BeeGardenServiceModel
             {
                 Id = b.Id,
@@ -44,7 +43,7 @@ namespace BeekeepingDiary.Services.BeeGardens
             };
         }
 
-        public IEnumerable<BeeGardenServiceModel> ByUser(string userId)
+       /* public IEnumerable<BeeGardenServiceModel> ByUser(string userId)
         {
             var beeGardensQuery = this.data.BeeGardens.AsQueryable();
             beeGardensQuery = beeGardensQuery.OrderByDescending(b => b.Year);
@@ -61,7 +60,7 @@ namespace BeekeepingDiary.Services.BeeGardens
             }).Where(b => b.UserId == userId)
             .ToList();
             return beeGardens;
-        }
+        }*/
     }
 }
 

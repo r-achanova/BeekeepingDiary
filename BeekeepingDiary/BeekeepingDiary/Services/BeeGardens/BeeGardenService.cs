@@ -1,4 +1,5 @@
 ﻿using BeekeepingDiary.Data;
+using BeekeepingDiary.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace BeekeepingDiary.Services.BeeGardens
             this.data = data;
         }
 
-        public BeeGardenQueryServiceModel All(int currentPage, int beeGardensPerPage)
+        public BeeGardenQueryServiceModel All(int currentPage, int beeGardensPerPage, string userId)
         {
             var beeGardensQuery = this.data.BeeGardens.AsQueryable();
             beeGardensQuery = beeGardensQuery.OrderByDescending(b => b.Year);
@@ -23,13 +24,14 @@ namespace BeekeepingDiary.Services.BeeGardens
             var beeGardens = beeGardensQuery
             .Skip((currentPage - 1) * beeGardensPerPage)
             .Take(beeGardensPerPage)
-            .Select(c => new BeeGardenServiceModel
+            .Where(b => b.UserId == userId)
+            .Select(b => new BeeGardenServiceModel
             {
-                Id = c.Id,
-                Name = c.Name,
-                Location = c.Location,
-                Year = c.Year,
-                ImageUrl = c.ImageUrl,
+                Id = b.Id,
+                Name = b.Name,
+                Location = b.Location,
+                Year = b.Year,
+                ImageUrl = b.ImageUrl,
             })
             .ToList();
 
@@ -41,5 +43,25 @@ namespace BeekeepingDiary.Services.BeeGardens
                 BeeGardens = beeGardens
             };
         }
+
+        public IEnumerable<BeeGardenServiceModel> ByUser(string userId)
+        {
+            var beeGardensQuery = this.data.BeeGardens.AsQueryable();
+            beeGardensQuery = beeGardensQuery.OrderByDescending(b => b.Year);
+
+
+            var beeGardens = beeGardensQuery
+            .Select(c => new BeeGardenServiceModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Location = c.Location,
+                Year = c.Year,
+                ImageUrl = c.ImageUrl,
+            }).Where(b => b.UserId == userId)
+            .ToList();
+            return beeGardens;
+        }
     }
 }
+

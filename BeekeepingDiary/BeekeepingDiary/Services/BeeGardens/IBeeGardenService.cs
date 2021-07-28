@@ -9,7 +9,9 @@ namespace BeekeepingDiary.Services.BeeGardens
     {
         BeeGardenQueryServiceModel All(
             int currentPage,
-            int beeGardensPerPage);
-        
+            int beeGardensPerPage,
+            string userId);
+        IEnumerable<BeeGardenServiceModel> ByUser(string userId);
+
     }
 }

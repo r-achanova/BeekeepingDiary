@@ -44,6 +44,12 @@ namespace BeekeepingDiary.Data
                 .WithMany(b => b.Produces)
                 .HasForeignKey(p => p.BeehiveId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder
+               .Entity<BeeGarden>()
+               .HasOne(b => b.ApplicationUser)
+               .WithMany(u => u.BeeGardens)
+               .HasForeignKey(b => b.UserId)
+               .OnDelete(DeleteBehavior.Restrict);
 
             base.OnModelCreating(builder);
         }

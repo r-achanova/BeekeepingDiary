@@ -4,11 +4,8 @@ using BeekeepingDiary.Models.BeeGardens;
 using BeekeepingDiary.Services.BeeGardens;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using static BeekeepingDiary.Data.DataConstants.BeeGarden;
+using BeekeepingDiary.Infrastructure;
+
 
 namespace BeekeepingDiary.Controllers
 {
@@ -27,8 +24,8 @@ namespace BeekeepingDiary.Controllers
         {
             var queryResult = this.beeGardens.All(
                 query.CurrentPage,
-                AllBeeGardensQueryModel.BeeGardensPerPage);
-
+                AllBeeGardensQueryModel.BeeGardensPerPage,
+                this.User.GetId());
 
             query.TotalBeeGardens = queryResult.TotalBeeGardens;
             query.BeeGardens = queryResult.BeeGardens;
@@ -51,19 +48,21 @@ namespace BeekeepingDiary.Controllers
             {
                 return View(beeGarden);
             }
+
             var beeGardenData = new BeeGarden
             {
                 Name = beeGarden.Name,
                 Location = beeGarden.Location,
                 ImageUrl = beeGarden.ImageUrl,
                 Year = beeGarden.Year,
-                
+                //UserId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value
+                UserId = this.User.GetId()
             };
 
             this.data.BeeGardens.Add(beeGardenData);
             this.data.SaveChanges();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("All", "BeeGardens");
         }
     }
 }

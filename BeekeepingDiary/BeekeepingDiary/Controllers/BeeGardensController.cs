@@ -33,7 +33,14 @@ namespace BeekeepingDiary.Controllers
             return View(query);
         }
 
+       /* [Authorize]
+        public IActionResult Mine()
+        {
+            var myBeeGardens = this.beeGardens.ByUser(this.User.GetId());
 
+            return View(myBeeGardens);
+        }
+       */
         [Authorize]
         public IActionResult Add()
         {
@@ -42,27 +49,62 @@ namespace BeekeepingDiary.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult Add(AddBeeGardenFormModel beeGarden)
+        public IActionResult Add(BeeGardenFormModel beeGarden)
         {
             if (!ModelState.IsValid)
             {
                 return View(beeGarden);
             }
 
-            var beeGardenData = new BeeGarden
+            this.beeGardens.Create(
+                beeGarden.Name,
+                beeGarden.Location,
+                beeGarden.ImageUrl,
+                beeGarden.Year,
+                this.User.GetId());
+
+            return RedirectToAction("All", "BeeGardens");
+        }
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var userId = this.User.GetId();
+
+            var beeGarden = this.beeGardens.Details(id);
+
+            if (beeGarden.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(new BeeGardenFormModel
             {
                 Name = beeGarden.Name,
                 Location = beeGarden.Location,
                 ImageUrl = beeGarden.ImageUrl,
                 Year = beeGarden.Year,
-                //UserId = this.User.FindFirst(ClaimTypes.NameIdentifier).Value
-                UserId = this.User.GetId()
-            };
-
-            this.data.BeeGardens.Add(beeGardenData);
-            this.data.SaveChanges();
+            });
 
             return RedirectToAction("All", "BeeGardens");
         }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(int id, BeeGardenFormModel beeGarden)
+        {
+            var userId = this.User.GetId();
+
+            this.beeGardens.Edit(
+                id,
+                beeGarden.Name,
+                beeGarden.Location,
+                beeGarden.ImageUrl,
+                beeGarden.Year
+                );
+
+            return RedirectToAction(nameof(All));
+        }
+
     }
 }

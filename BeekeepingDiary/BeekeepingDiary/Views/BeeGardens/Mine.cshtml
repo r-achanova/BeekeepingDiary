@@ -1,0 +1,46 @@
+﻿@model AllBeeGardensQueryModel
+
+@{ ViewData["Title"] = "Mine Bee-gardens"; }
+
+
+
+@{ var previousPage = Model.CurrentPage - 1;
+    if (previousPage < 1)
+    {
+        previousPage = 1;
+    }
+
+    var maxPage = Math.Ceiling((double)Model.TotalBeeGardens / AllBeeGardensQueryModel.BeeGardensPerPage); }
+
+<div class="row mb-5">
+    <div class="col-md-6">
+        <a class="btn btn-primary @(Model.CurrentPage == 1 ? "disabled" : string.Empty)"
+           asp-controller="BeeGardens"
+           asp-action="All"
+           asp-route-currentPage="@previousPage"><<</a>
+    </div>
+    <div class="col-md-6">
+        <a class="btn btn-primary float-right @(Model.CurrentPage == maxPage ? "disabled" : string.Empty)"
+           asp-controller="BeeGardens"
+           asp-action="All"
+           asp-route-currentPage="@(Model.CurrentPage + 1)">>></a>
+    </div>
+</div>
+
+@if (!Model.BeeGardens.Any())
+{
+<h2 class="text-center">No bee-gardens found!</h2>}
+
+<div class="row">
+    @foreach (var beeGarden in Model.BeeGardens)
+    {
+<div class="col-md-4">
+    <div class="card mb-3">
+        <img class="card-img-top" src="@beeGarden.ImageUrl" alt="@beeGarden.Name @beeGarden.Location - @beeGarden.Year">
+        <div class="card-body text-center">
+            <h5 class="card-title text-center">@beeGarden.Name @beeGarden.Location - @beeGarden.Year</h5>
+            <a asp-controller="BeeGardens" asp-action="Details" asp-route-id="@beeGarden.Id" class="btn btn-primary">View More</a>
+        </div>
+    </div>
+</div>}
+</div>

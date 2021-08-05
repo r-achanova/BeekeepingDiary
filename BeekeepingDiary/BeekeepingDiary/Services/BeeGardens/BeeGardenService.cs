@@ -43,24 +43,80 @@ namespace BeekeepingDiary.Services.BeeGardens
             };
         }
 
-       /* public IEnumerable<BeeGardenServiceModel> ByUser(string userId)
+        public int Create(string name, string location, string imageUrl, int year, string userId)
         {
-            var beeGardensQuery = this.data.BeeGardens.AsQueryable();
-            beeGardensQuery = beeGardensQuery.OrderByDescending(b => b.Year);
-
-
-            var beeGardens = beeGardensQuery
-            .Select(c => new BeeGardenServiceModel
+            var beeGardenData = new BeeGarden
             {
-                Id = c.Id,
-                Name = c.Name,
-                Location = c.Location,
-                Year = c.Year,
-                ImageUrl = c.ImageUrl,
-            }).Where(b => b.UserId == userId)
-            .ToList();
-            return beeGardens;
-        }*/
+                Name = name,
+                Location = location,
+                ImageUrl = imageUrl,
+                Year = year,
+                UserId = userId,
+            };
+
+            this.data.BeeGardens.Add(beeGardenData);
+            this.data.SaveChanges();
+
+            return beeGardenData.Id;
+        }
+
+
+        public BeeGardenServiceModel Details(int id)
+        => this.data
+                .BeeGardens
+                .Where(b => b.Id == id)
+                .Select(b => new BeeGardenServiceModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Location = b.Location,
+                    Year = b.Year,
+                    ImageUrl = b.ImageUrl,
+                    UserId=b.UserId
+                })
+                .FirstOrDefault();
+
+        public bool Edit(int beeGardenId, string name, string location, string imageUrl, int year)
+        {
+            var beeGardenData = this.data.BeeGardens.Find(beeGardenId);
+            if (beeGardenData == null)
+            {
+                return false;
+            }
+
+            beeGardenData.Name = name;
+            beeGardenData.Location = location;
+            beeGardenData.Year = year;
+            beeGardenData.ImageUrl = imageUrl;
+
+            this.data.SaveChanges();
+
+            return true;
+
+        }
+
+
+
+      /*  public IEnumerable<BeeGardenServiceModel> ByUser(string userId)
+        {
+            return GetBeeGardens(this.data
+                .BeeGardens
+                .Where(b => b.UserId == userId));
+            }
+
+ private static IEnumerable<BeeGardenServiceModel> GetBeeGardens(IQueryable<BeeGarden> beeGardenQuery)
+             => beeGardenQuery
+                 .Select(b => new BeeGardenServiceModel
+                 {
+                  Id = b.Id,
+                  Name = b.Name,
+                  Location = b.Location,
+                  Year = b.Year,
+                  ImageUrl = b.ImageUrl,
+                 })
+                 .ToList();
+            */ 
+        }
     }
-}
+
 

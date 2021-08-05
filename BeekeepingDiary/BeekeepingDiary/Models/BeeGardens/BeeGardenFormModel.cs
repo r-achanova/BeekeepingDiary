@@ -5,7 +5,7 @@ using static BeekeepingDiary.Data.DataConstants.BeeGarden;
 
 namespace BeekeepingDiary.Models.BeeGardens
 {
-    public class AddBeeGardenFormModel
+    public class BeeGardenFormModel
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]

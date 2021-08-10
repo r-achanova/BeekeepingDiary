@@ -27,5 +27,7 @@ namespace BeekeepingDiary.Services.BeeGardens
             string imageUrl,
             int year);
 
+        bool IsByCurrentUser(int beeGardenId, string userId);
+
     }
 }

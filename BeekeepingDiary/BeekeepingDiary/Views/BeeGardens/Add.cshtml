@@ -1,7 +1,9 @@
 ﻿@model BeeGardenFormModel
 
-@{ 
-    ViewBag.Title = "Add Bee-Garden"; 
- }
+@{ ViewBag.Title = "Add Bee-Garden"; }
 <partial name="_BeeGardenFormPartial" model="@Model" />
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
 

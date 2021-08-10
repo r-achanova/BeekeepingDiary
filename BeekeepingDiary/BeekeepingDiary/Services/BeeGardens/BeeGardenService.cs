@@ -95,28 +95,33 @@ namespace BeekeepingDiary.Services.BeeGardens
 
         }
 
-
-
-      /*  public IEnumerable<BeeGardenServiceModel> ByUser(string userId)
-        {
-            return GetBeeGardens(this.data
+        public bool IsByCurrentUser(int beeGardenId, string userId)
+        => this.data
                 .BeeGardens
-                .Where(b => b.UserId == userId));
-            }
+                .Any(b => b.Id == beeGardenId && b.UserId == userId);
 
- private static IEnumerable<BeeGardenServiceModel> GetBeeGardens(IQueryable<BeeGarden> beeGardenQuery)
-             => beeGardenQuery
-                 .Select(b => new BeeGardenServiceModel
-                 {
-                  Id = b.Id,
-                  Name = b.Name,
-                  Location = b.Location,
-                  Year = b.Year,
-                  ImageUrl = b.ImageUrl,
-                 })
-                 .ToList();
-            */ 
-        }
+
+
+        /*  public IEnumerable<BeeGardenServiceModel> ByUser(string userId)
+          {
+              return GetBeeGardens(this.data
+                  .BeeGardens
+                  .Where(b => b.UserId == userId));
+              }
+
+   private static IEnumerable<BeeGardenServiceModel> GetBeeGardens(IQueryable<BeeGarden> beeGardenQuery)
+               => beeGardenQuery
+                   .Select(b => new BeeGardenServiceModel
+                   {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Location = b.Location,
+                    Year = b.Year,
+                    ImageUrl = b.ImageUrl,
+                   })
+                   .ToList();
+              */
+    }
     }
 
 

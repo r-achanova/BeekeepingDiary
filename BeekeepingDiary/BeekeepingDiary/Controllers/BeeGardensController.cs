@@ -12,12 +12,10 @@ namespace BeekeepingDiary.Controllers
     public class BeeGardensController : Controller
     {
         private readonly IBeeGardenService beeGardens;
-        private readonly BeekeepingDbContext data;
-
-        public BeeGardensController(IBeeGardenService beeGardens, BeekeepingDbContext data)
+      
+        public BeeGardensController(IBeeGardenService beeGardens)
         {
             this.beeGardens = beeGardens;
-            this.data = data;
         }
         [Authorize]
         public IActionResult All([FromQuery] AllBeeGardensQueryModel query)
@@ -63,7 +61,7 @@ namespace BeekeepingDiary.Controllers
                 beeGarden.Year,
                 this.User.GetId());
 
-            return RedirectToAction("All", "BeeGardens");
+            return RedirectToAction(nameof(All));
         }
 
         [Authorize]
@@ -85,8 +83,6 @@ namespace BeekeepingDiary.Controllers
                 ImageUrl = beeGarden.ImageUrl,
                 Year = beeGarden.Year,
             });
-
-            return RedirectToAction("All", "BeeGardens");
         }
 
         [HttpPost]
@@ -94,6 +90,16 @@ namespace BeekeepingDiary.Controllers
         public IActionResult Edit(int id, BeeGardenFormModel beeGarden)
         {
             var userId = this.User.GetId();
+
+            if (!ModelState.IsValid)
+            {
+                return View(beeGarden);
+            }
+
+            if (!this.beeGardens.IsByCurrentUser(id, userId))
+            {
+                return BadRequest();
+            }
 
             this.beeGardens.Edit(
                 id,

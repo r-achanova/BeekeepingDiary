@@ -9,7 +9,7 @@
         <div class="card-body text-center">
             <h5 class="card-title text-center">@beeGarden.Name @beeGarden.Location - @beeGarden.Year</h5>
             <a asp-controller="BeeGardens" asp-action="Details" asp-route-id="@beeGarden.Id" class="btn btn-primary">View More</a>
-            @if (ViewBag.AllowCarEdit == true)
+            @if (ViewBag.AllowBeeGardenEdit == true)
             {
         <a asp-controller="BeeGardens" asp-action="Edit" asp-route-id="@beeGarden.Id" class="btn btn-warning">Edit</a>
         <a asp-controller="BeeGardens" asp-action="Delete" asp-route-id="@beeGarden.Id" class="btn btn-danger">Delete</a>}

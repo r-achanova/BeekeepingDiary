@@ -8,7 +8,7 @@ using BeekeepingDiary.Data.Models;
 
 namespace BeekeepingDiary.Models.Beehives
 {
-    public class AddBeehiveFormModel
+    public class BeehiveFormModel
     {
         [Required]
         [StringLength(NameMaxLength, MinimumLength = NameMinLength)]

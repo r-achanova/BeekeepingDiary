@@ -1,0 +1,19 @@
+﻿@model IEnumerable<BeehiveServiceModel>
+
+<div class="row">
+    @foreach (var beehive in Model)
+    {
+<div class="col-md-4">
+    <div class="card mb-3">
+        <img class="card-img-top" src="@beehive.ImageUrl" alt="@beehive.Name in @beehive.BeeGarden - @beehive.Year">
+        <div class="card-body text-center">
+            <h5 class="card-title text-center">@beehive.Name in @beehive.BeeGarden - @beehive.Year</h5>
+            <a asp-controller="Beehives" asp-action="Details" asp-route-id="@beehive.Id" class="btn btn-primary">View More</a>
+            @if (ViewBag.AllowBeehiveEdit == true)
+            {
+<a asp-controller="BeeGardens" asp-action="Edit" asp-route-id="@beehive.Id" class="btn btn-warning">Edit</a>
+                    <a asp-controller="Beehives" asp-action="Delete" asp-route-id="@beehive.Id" class="btn btn-danger">Delete</a>}
+        </div>
+    </div>
+</div>}
+</div>

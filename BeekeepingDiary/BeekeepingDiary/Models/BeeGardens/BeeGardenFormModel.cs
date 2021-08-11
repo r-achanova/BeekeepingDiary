@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using static BeekeepingDiary.Data.DataConstants;
 using static BeekeepingDiary.Data.DataConstants.BeeGarden;
 
 namespace BeekeepingDiary.Models.BeeGardens
@@ -22,7 +23,7 @@ namespace BeekeepingDiary.Models.BeeGardens
 
         public int Year { get; set; }
 
-       // public IEnumerable<Beehive> Beehives { get; init; } = new List<Beehive>();
+       public IEnumerable<Beehive> Beehives { get; init; } = new List<Beehive>();
 
 
     }

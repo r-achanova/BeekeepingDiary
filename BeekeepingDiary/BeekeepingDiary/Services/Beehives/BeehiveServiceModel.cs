@@ -12,7 +12,7 @@ namespace BeekeepingDiary.Services.Beehives
         public string ImageUrl { get; init; }
         public int Year { get; init; }
         public string Category { get; init; }
-        public int BeeGardenId { get; set; }
+       // public int BeeGardenId { get; set; }
         public string BeeGarden { get; init; }
     }
 }

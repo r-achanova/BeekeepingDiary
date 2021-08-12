@@ -14,6 +14,16 @@ namespace BeekeepingDiary.Services.Beehives
             int beeGardenId
             );
 
-        
+        bool IsInBeeGardenId(int beehiveId, int beeGardenId);
+
+        int Create(
+            string name,
+            string imageUrl,
+            int year,
+            int categoryId,
+            int beeGardenId);
+
+        IEnumerable<BeehiveCategoryServiceModel> AllCategories();
+        IEnumerable<BeehiveBeeGardenServiceModel> AllBeeGardens(string userId);
     }
 }

@@ -100,7 +100,7 @@ namespace BeekeepingDiary.Services.BeeGardens
                 .BeeGardens
                 .Any(b => b.Id == beeGardenId && b.UserId == userId);
 
-
+        
 
         /*  public IEnumerable<BeeGardenServiceModel> ByUser(string userId)
           {

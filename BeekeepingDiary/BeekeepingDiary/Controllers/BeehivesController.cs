@@ -15,15 +15,14 @@ namespace BeekeepingDiary.Controllers
 {
     public class BeehivesController:Controller
     {
-        private readonly BeekeepingDbContext data;
+       
         private readonly IBeehiveService beehives;
         private readonly IBeeGardenService beeGardens;
 
-        public BeehivesController(IBeeGardenService beeGardens, IBeehiveService beehives, BeekeepingDbContext data)
+        public BeehivesController(IBeeGardenService beeGardens, IBeehiveService beehives)
         {
             this.beeGardens = beeGardens;
             this.beehives = beehives;
-            this.data = data;
         }
         [Authorize]
         public IActionResult All([FromQuery] AllBeehivesQueryModel query)
@@ -32,7 +31,7 @@ namespace BeekeepingDiary.Controllers
                 query.CurrentPage,
                 AllBeehivesQueryModel.BeehivesPerPage, 
                 this.User.GetId(),
-                1);//1 do not use in this moment
+                query.BeeGardenId);//1 do not use in this moment
             query.TotalBeehives = queryResult.TotalBeehives;
             query.Beehives = queryResult.Beehives;
 
@@ -45,8 +44,8 @@ namespace BeekeepingDiary.Controllers
         {
             return View(new BeehiveFormModel
             {
-                Categories = this.GetBeehiveCategories(),
-                BeeGardens = this.GetCurrentUserBeeGardens(),
+                Categories = this.beehives.AllCategories(),
+                BeeGardens = this.beehives.AllBeeGardens(this.User.GetId()),
             });
         }
 
@@ -57,26 +56,23 @@ namespace BeekeepingDiary.Controllers
         {
             if (!ModelState.IsValid)
             {
+                beehive.Categories = this.beehives.AllCategories();
+                beehive.BeeGardens = this.beehives.AllBeeGardens(this.User.GetId());
                 return View(beehive);
             }
-            var beehiveData = new Beehive
-            {
-                Name = beehive.Name,
-                ImageUrl = beehive.ImageUrl,
-                Year = beehive.Year,
-                CategoryId = beehive.CategoryId,
-                BeeGardenId = beehive.BeeGardenId,
 
-            };
-
-            this.data.Beehives.Add(beehiveData);
-            this.data.SaveChanges();
-
-           // return RedirectToAction("Index", "Home");
-            return RedirectToAction(nameof(All));
+           this.beehives.Create(
+                beehive.Name,
+                beehive.ImageUrl,
+                beehive.Year,
+                beehive.CategoryId,
+                beehive.BeeGardenId
+                );
+          
+            return RedirectToAction(nameof(All), beehive.BeeGardenId);
         }
 
-        private IEnumerable<BeehiveCategoryViewModel> GetBeehiveCategories()
+       /* private IEnumerable<BeehiveCategoryViewModel> GetBeehiveCategories()
             => this.data
                 .Categories
                 .Select(c => new BeehiveCategoryViewModel
@@ -84,18 +80,18 @@ namespace BeekeepingDiary.Controllers
                     Id = c.Id,
                     Name = c.Name
                 })
-                .ToList();
+                .ToList();*/
 
-        private IEnumerable<BeeGardenViewModel> GetCurrentUserBeeGardens()
+       /* private IEnumerable<BeehiveBeeGardenServiceModel> GetCurrentUserBeeGardens()
             => this.data
                 .BeeGardens
                 .Where(b => b.UserId == User.GetId())
-                .Select(b => new BeeGardenViewModel
+                .Select(b => new BeehiveBeeGardenServiceModel
                 {
                     Id = b.Id,
                     Name = b.Name,
                     UserId=b.UserId
                 })
-                 .ToList();
+                 .ToList();*/
     }
 }

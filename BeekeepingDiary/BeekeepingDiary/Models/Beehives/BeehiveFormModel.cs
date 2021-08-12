@@ -5,6 +5,7 @@ using static BeekeepingDiary.Data.DataConstants.Beehive;
 using System.Linq;
 using System.Threading.Tasks;
 using BeekeepingDiary.Data.Models;
+using BeekeepingDiary.Services.Beehives;
 
 namespace BeekeepingDiary.Models.Beehives
 {
@@ -25,11 +26,11 @@ namespace BeekeepingDiary.Models.Beehives
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 
-        public IEnumerable<BeehiveCategoryViewModel> Categories { get; set; }
+        public IEnumerable<BeehiveCategoryServiceModel> Categories { get; set; }
 
         [Display(Name = "Bee-garden")]
         public int BeeGardenId { get; init; }
 
-        public IEnumerable<BeeGardenViewModel> BeeGardens { get; set; }
+        public IEnumerable<BeehiveBeeGardenServiceModel> BeeGardens { get; set; }
     }
 }

@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BeekeepingDiary.Models.Beehives
+namespace BeekeepingDiary.Services.Beehives
 {
-    public class BeehiveCategoryViewModel
+    public class BeehiveBeeGardenServiceModel
     {
-
         public int Id { get; init; }
-
         public string Name { get; init; }
+        public string UserId { get; set; }
     }
 }

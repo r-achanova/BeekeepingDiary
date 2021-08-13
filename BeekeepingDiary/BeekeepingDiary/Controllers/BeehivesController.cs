@@ -82,27 +82,82 @@ namespace BeekeepingDiary.Controllers
           
             return RedirectToAction(nameof(All), new { currentPage=1, beehivesPerPage=3, userId= this.User.GetId(), beeGardenId = beehive.BeeGardenId });
         }
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var userId = this.User.GetId();
 
-       /* private IEnumerable<BeehiveCategoryViewModel> GetBeehiveCategories()
-            => this.data
-                .Categories
-                .Select(c => new BeehiveCategoryViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name
-                })
-                .ToList();*/
+            var beehive = this.beehives.Details(id);
+            if (beehive.UserId != userId )
+            {
+                return Unauthorized();
+            }
 
-       /* private IEnumerable<BeehiveBeeGardenServiceModel> GetCurrentUserBeeGardens()
-            => this.data
-                .BeeGardens
-                .Where(b => b.UserId == User.GetId())
-                .Select(b => new BeehiveBeeGardenServiceModel
-                {
-                    Id = b.Id,
-                    Name = b.Name,
-                    UserId=b.UserId
-                })
-                 .ToList();*/
+
+            return View(new BeehiveFormModel
+            {
+                Name = beehive.Name,
+                ImageUrl = beehive.ImageUrl,
+                Year = beehive.Year,
+                CategoryId = beehive.CategoryId,
+                Categories=beehives.AllCategories(),
+                BeeGardenId = beehive.BeeGardenId,
+                BeeGardens=beehives.AllBeeGardens(userId)
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(int id, BeehiveFormModel beehive)
+        {
+
+            var userId = this.User.GetId();
+
+            if (!ModelState.IsValid)
+            {
+                beehive.Categories = this.beehives.AllCategories();
+                beehive.BeeGardens = this.beehives.AllBeeGardens(this.User.GetId());
+                return View(beehive);
+            }
+
+            if (!this.beeGardens.IsByCurrentUser(id, userId))
+            {
+                return BadRequest();
+            }
+            
+            this.beehives.Edit(
+                id,
+                beehive.Name,
+                beehive.ImageUrl,
+                beehive.Year,
+                beehive.CategoryId,
+                beehive.BeeGardenId
+                );
+
+            return RedirectToAction(nameof(All), new { currentPage = 1, beehivesPerPage = 3, userId = this.User.GetId(), beeGardenId = beehive.BeeGardenId });
+        }
     }
-}
+
+     /*    private IEnumerable<BeehiveCategoryViewModel> GetBeehiveCategories()
+             => this.data
+                 .Categories
+                 .Select(c => new BeehiveCategoryViewModel
+                 {
+                     Id = c.Id,
+                     Name = c.Name
+                 })
+                 .ToList();
+
+         private IEnumerable<BeehiveBeeGardenServiceModel> GetCurrentUserBeeGardens()
+             => this.data
+                 .BeeGardens
+                 .Where(b => b.UserId == User.GetId())
+                 .Select(b => new BeehiveBeeGardenServiceModel
+                 {
+                     Id = b.Id,
+                     Name = b.Name,
+                     UserId=b.UserId
+                 })
+                  .ToList();*/
+    }
+

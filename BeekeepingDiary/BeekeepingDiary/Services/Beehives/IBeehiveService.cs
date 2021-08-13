@@ -23,6 +23,7 @@ namespace BeekeepingDiary.Services.Beehives
             int categoryId,
             int beeGardenId);
 
+        public bool Edit(int beehiveId, string name, string imageUrl, int year, int categoryId, int beeGardenId);
         IEnumerable<BeehiveCategoryServiceModel> AllCategories();
         IEnumerable<BeehiveBeeGardenServiceModel> AllBeeGardens(string userId);
         public IEnumerable<BeehiveServiceModel> GetBeehivesByUserId(string userId);
@@ -32,5 +33,7 @@ namespace BeekeepingDiary.Services.Beehives
             int currentPage,
             int beehivesPerPage,
             string userId);
+
+        public BeehiveDetailsServiceModel Details(int beehiveId);
     }
 }

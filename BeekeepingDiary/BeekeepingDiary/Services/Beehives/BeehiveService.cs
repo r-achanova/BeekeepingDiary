@@ -99,7 +99,44 @@ namespace BeekeepingDiary.Services.Beehives
             return beehiveData.Id;
         }
 
-       public IEnumerable<BeehiveServiceModel> GetBeehivesByBeeGardenId(int beeGardenId)
+        public BeehiveDetailsServiceModel Details(int id)
+            => this.data
+                .Beehives
+                .Where(c => c.Id == id)
+                .Select(c => new BeehiveDetailsServiceModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Year = c.Year,
+                    ImageUrl = c.ImageUrl,
+                    CategoryId=c.CategoryId,
+                    Category = c.Category.Name,
+                    BeeGardenId=c.BeeGardenId,
+                    BeeGarden = c.BeeGarden.Name,
+                    UserId = c.BeeGarden.UserId
+                })
+                .FirstOrDefault();
+        public bool Edit(int beehiveId, string name, string imageUrl, int year, int categoryId, int beeGardenId)
+        {
+            var beehiveData = this.data.Beehives.Find(beehiveId);
+            if (beehiveData == null)
+            {
+                return false;
+            }
+
+            beehiveData.Name = name;
+            beehiveData.Year = year;
+            beehiveData.ImageUrl = imageUrl;
+            beehiveData.CategoryId = categoryId;
+           beehiveData.BeeGardenId = beeGardenId;
+
+            this.data.SaveChanges();
+
+            return true;
+
+        }
+
+        public IEnumerable<BeehiveServiceModel> GetBeehivesByBeeGardenId(int beeGardenId)
         {
             var query = this.data.Beehives
                 .Where(x => x.BeeGardenId == beeGardenId)

@@ -31,14 +31,20 @@ namespace BeekeepingDiary.Controllers
             return View(query);
         }
 
-       /* [Authorize]
-        public IActionResult Mine()
+        [Authorize]
+        public IActionResult Details(int id)
         {
-            var myBeeGardens = this.beeGardens.ByUser(this.User.GetId());
-
-            return View(myBeeGardens);
+           return RedirectToAction("All", "Beehives", new { beeGardenId = id });
         }
-       */
+
+        /* [Authorize]
+         public IActionResult Mine()
+         {
+             var myBeeGardens = this.beeGardens.ByUser(this.User.GetId());
+
+             return View(myBeeGardens);
+         }
+        */
         [Authorize]
         public IActionResult Add()
         {
@@ -54,14 +60,15 @@ namespace BeekeepingDiary.Controllers
                 return View(beeGarden);
             }
 
-            this.beeGardens.Create(
+            var id=this.beeGardens.Create(
                 beeGarden.Name,
                 beeGarden.Location,
                 beeGarden.ImageUrl,
                 beeGarden.Year,
                 this.User.GetId());
 
-            return RedirectToAction(nameof(All));
+            // return RedirectToAction(nameof(All));
+            return RedirectToAction("All", "Beehives",new {beeGardenId=id});
         }
 
         [Authorize]

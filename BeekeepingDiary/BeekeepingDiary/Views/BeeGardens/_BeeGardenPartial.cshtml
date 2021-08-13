@@ -8,7 +8,7 @@
         <img class="card-img-top" src="@beeGarden.ImageUrl" alt="@beeGarden.Name @beeGarden.Location - @beeGarden.Year">
         <div class="card-body text-center">
             <h5 class="card-title text-center">@beeGarden.Name @beeGarden.Location - @beeGarden.Year</h5>
-            <a asp-controller="BeeGardens" asp-action="Details" asp-route-id="@beeGarden.Id" class="btn btn-primary">View More</a>
+            <a asp-controller="BeeGardens" asp-action="Details" asp-route-id="@beeGarden.Id" class="btn btn-primary">View Beehives</a>
             @if (ViewBag.AllowBeeGardenEdit == true)
             {
         <a asp-controller="BeeGardens" asp-action="Edit" asp-route-id="@beeGarden.Id" class="btn btn-warning">Edit</a>

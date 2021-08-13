@@ -31,7 +31,7 @@ namespace BeekeepingDiary.Controllers
                 query.CurrentPage,
                 AllBeehivesQueryModel.BeehivesPerPage, 
                 this.User.GetId(),
-                query.BeeGardenId);//1 do not use in this moment
+                query.BeeGardenId);
             query.TotalBeehives = queryResult.TotalBeehives;
             query.Beehives = queryResult.Beehives;
 
@@ -80,7 +80,7 @@ namespace BeekeepingDiary.Controllers
                 beehive.BeeGardenId
                 );
           
-            return RedirectToAction(nameof(All), new { beeGardenId = beehive.BeeGardenId });
+            return RedirectToAction(nameof(All), new { currentPage=1, beehivesPerPage=3, userId= this.User.GetId(), beeGardenId = beehive.BeeGardenId });
         }
 
        /* private IEnumerable<BeehiveCategoryViewModel> GetBeehiveCategories()

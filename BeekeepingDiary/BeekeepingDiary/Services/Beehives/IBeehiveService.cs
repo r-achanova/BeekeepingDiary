@@ -25,5 +25,12 @@ namespace BeekeepingDiary.Services.Beehives
 
         IEnumerable<BeehiveCategoryServiceModel> AllCategories();
         IEnumerable<BeehiveBeeGardenServiceModel> AllBeeGardens(string userId);
+        public IEnumerable<BeehiveServiceModel> GetBeehivesByUserId(string userId);
+
+        public IEnumerable<BeehiveServiceModel> GetBeehivesByBeeGardenId(int beeGardenId);
+        public BeehiveQueryServiceModel Mine(
+            int currentPage,
+            int beehivesPerPage,
+            string userId);
     }
 }

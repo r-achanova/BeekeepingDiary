@@ -18,23 +18,13 @@ namespace BeekeepingDiary.Services.Beehives
         }
         public BeehiveQueryServiceModel All(int currentPage, int beehivesPerPage, string userId, int beeGardenId)
         {
-            var beehivesQuery = this.data.Beehives.Where(b => b.BeeGarden.UserId == userId).AsQueryable();
-            beehivesQuery = beehivesQuery.OrderBy(b => b.BeeGarden.Name).ThenByDescending(b => b.Year);
+            var beehivesQuery = GetBeehivesByBeeGardenId(beeGardenId);
+            beehivesQuery = beehivesQuery.OrderBy(b => b.Name).ThenByDescending(b => b.Year);
             var totalBeehives = beehivesQuery.Count();
 
             var beehives = beehivesQuery
             .Skip((currentPage - 1) * beehivesPerPage)
             .Take(beehivesPerPage)
-            .Select(b => new BeehiveServiceModel
-            {
-                Id = b.Id,
-                Name = b.Name,
-                Year = b.Year,
-                ImageUrl = b.ImageUrl,
-                Category = b.Category.Name,
-                // BeeGardenId=b.BeeGardenId,
-                BeeGarden = b.BeeGarden.Name
-            })
             .ToList();
 
             return new BeehiveQueryServiceModel
@@ -46,6 +36,27 @@ namespace BeekeepingDiary.Services.Beehives
             };
         }
 
+        public BeehiveQueryServiceModel Mine(int currentPage, int beehivesPerPage, string userId)
+        {
+            var beehivesQuery = GetBeehivesByUserId(userId);
+            beehivesQuery = beehivesQuery.OrderBy(b => b.BeeGarden).ThenBy(b => b.Name);
+            var totalBeehives = beehivesQuery.Count();
+
+            var beehives = beehivesQuery
+            .Skip((currentPage - 1) * beehivesPerPage)
+            .Take(beehivesPerPage)
+            .ToList();
+
+            return new BeehiveQueryServiceModel
+            {
+                TotalBeehives = totalBeehives,
+                CurrentPage = currentPage,
+                BeehivesPerPage = beehivesPerPage,
+                Beehives = beehives
+            };
+        }
+
+       
         public IEnumerable<BeehiveBeeGardenServiceModel> AllBeeGardens(string userId)
         {
 
@@ -88,6 +99,40 @@ namespace BeekeepingDiary.Services.Beehives
             return beehiveData.Id;
         }
 
+       public IEnumerable<BeehiveServiceModel> GetBeehivesByBeeGardenId(int beeGardenId)
+        {
+            var query = this.data.Beehives
+                .Where(x => x.BeeGardenId == beeGardenId)
+                .Select(b => new BeehiveServiceModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    ImageUrl = b.ImageUrl,
+                    Year = b.Year,
+                    Category = b.Category.Name,
+                    BeeGarden = b.BeeGarden.Name
+                })
+                .ToList();
+            return query;
+        }
+
+        public IEnumerable<BeehiveServiceModel> GetBeehivesByUserId(string userId)
+        {
+            var query = this.data.Beehives
+                .Where(b => b.BeeGarden.UserId == userId)
+                .Select(b => new BeehiveServiceModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    ImageUrl = b.ImageUrl,
+                    Year = b.Year,
+                    Category = b.Category.Name,
+                    BeeGarden = b.BeeGarden.Name
+                })
+                .ToList();
+            return query;
+        }
+
         public bool IsInBeeGardenId(int beehiveId, int beeGardenId)
         {
             var beehiveBeeGardenId = this.data.Beehives
@@ -96,5 +141,6 @@ namespace BeekeepingDiary.Services.Beehives
                 .FirstOrDefault();
             return beehiveBeeGardenId == beeGardenId;
         }
+     
     }
 }

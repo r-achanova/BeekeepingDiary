@@ -38,7 +38,18 @@ namespace BeekeepingDiary.Controllers
             return View(query);
         }
 
+        [Authorize]
+        public IActionResult Mine([FromQuery] AllBeehivesQueryModel query)
+        {
+            var queryResult = this.beehives.Mine(
+                query.CurrentPage,
+                AllBeehivesQueryModel.BeehivesPerPage,
+                this.User.GetId());
+            query.TotalBeehives = queryResult.TotalBeehives;
+            query.Beehives = queryResult.Beehives;
 
+            return View(query);
+        }
         [Authorize]
         public IActionResult Add()
         {
@@ -69,7 +80,7 @@ namespace BeekeepingDiary.Controllers
                 beehive.BeeGardenId
                 );
           
-            return RedirectToAction(nameof(All), beehive.BeeGardenId);
+            return RedirectToAction(nameof(All), new { beeGardenId = beehive.BeeGardenId });
         }
 
        /* private IEnumerable<BeehiveCategoryViewModel> GetBeehiveCategories()

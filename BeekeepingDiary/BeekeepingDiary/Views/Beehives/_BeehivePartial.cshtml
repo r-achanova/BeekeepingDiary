@@ -11,7 +11,7 @@
             <a asp-controller="Beehives" asp-action="Details" asp-route-id="@beehive.Id" class="btn btn-primary">View More</a>
             @if (ViewBag.AllowBeehiveEdit == true)
             {
-<a asp-controller="Beehives" asp-action="Edit" asp-route-id="@beehive.Id" class="btn btn-warning">Edit</a>
+<a asp-controller="Beehives" asp-action="Edit" asp-route-id="@beehive.Id"  class="btn btn-warning">Edit</a>
                     <a asp-controller="Beehives" asp-action="Delete" asp-route-id="@beehive.Id" class="btn btn-danger">Delete</a>}
         </div>
     </div>

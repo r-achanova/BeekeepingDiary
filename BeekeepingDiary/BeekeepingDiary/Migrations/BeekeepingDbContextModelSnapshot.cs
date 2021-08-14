@@ -178,7 +178,7 @@ namespace BeekeepingDiary.Migrations
                     b.Property<int>("BeehiveId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Data")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
@@ -202,7 +202,7 @@ namespace BeekeepingDiary.Migrations
                     b.Property<int>("BeehiveId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("Data")
+                    b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
                     b.Property<double>("HoneyKg")

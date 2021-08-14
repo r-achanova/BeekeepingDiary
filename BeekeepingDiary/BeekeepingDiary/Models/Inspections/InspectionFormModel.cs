@@ -9,7 +9,7 @@ namespace BeekeepingDiary.Models.Inspections
     {
         public int Id { get; init; }
 
-        public DateTime Data { get; set; }
+        public DateTime Date { get; set; }
 
         public int BeehiveId { get; set; }
         public Beehive Beehive { get; set; }

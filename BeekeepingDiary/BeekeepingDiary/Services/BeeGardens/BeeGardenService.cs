@@ -43,6 +43,22 @@ namespace BeekeepingDiary.Services.BeeGardens
             };
         }
 
+        public IEnumerable<BeeGardenServiceModel> Index()
+        {
+            var beeGardens = this.data
+                .BeeGardens
+                .OrderBy(b => b.Id)
+                .Select(b => new BeeGardenServiceModel
+                {
+                    Id = b.Id,
+                    Name = b.Name,
+                    Location = b.Location,
+                    Year = b.Year,
+                    ImageUrl = b.ImageUrl
+                })
+                .ToList();
+            return beeGardens;
+        }
         public int Create(string name, string location, string imageUrl, int year, string userId)
         {
             var beeGardenData = new BeeGarden

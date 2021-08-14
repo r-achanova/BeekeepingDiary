@@ -29,5 +29,6 @@ namespace BeekeepingDiary.Services.BeeGardens
 
         bool IsByCurrentUser(int beeGardenId, string userId);
 
+        public IEnumerable<BeeGardenServiceModel> Index();
     }
 }

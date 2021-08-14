@@ -1,4 +1,4 @@
-﻿@model IndexViewModel
+﻿@model IndexServiceModel
 
 @{
     ViewData["Title"] = "Welcome!";
@@ -24,9 +24,7 @@
             var beeGarden = Model.BeeGardens[i];
 <div class="carousel-item @(i == 0 ? "active" : string.Empty)">
     <img class="d-block w-100" src="@beeGarden.ImageUrl" alt="@beeGarden.Name @beeGarden.Location">
-    <div class="carousel-caption d-none d-md-block">
-        <h5><a class="btn btn-primary" asp-controller="BeeGarden" asp-action="Details" asp-route-id="@beeGarden.Id">@beeGarden.Year  @beeGarden.Name @beeGarden.Location</a></h5>
-    </div>
+    
 </div>}
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">

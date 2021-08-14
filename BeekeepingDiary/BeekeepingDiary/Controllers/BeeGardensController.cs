@@ -67,8 +67,7 @@ namespace BeekeepingDiary.Controllers
                 beeGarden.Year,
                 this.User.GetId());
 
-            // return RedirectToAction(nameof(All));
-            return RedirectToAction("All", "Beehives",new {beeGardenId=id});
+           return RedirectToAction("All", "Beehives",new {beeGardenId=id});
         }
 
         [Authorize]

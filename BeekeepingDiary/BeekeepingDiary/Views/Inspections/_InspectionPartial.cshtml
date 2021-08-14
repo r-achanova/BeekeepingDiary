@@ -1,0 +1,14 @@
+﻿@model AllInspectionsQueryModel
+
+<div class="row">
+    
+<div class="col-md-4">
+    <div class="card mb-3">
+        
+        <div class="card-body text-center">
+            <h1 class="card-title text-center">@Model.BeehiveId</h1>
+            <a asp-controller="Inspections" asp-action="Add" asp-route-id="@Model.BeehiveId" class="btn btn-primary">Add Inspection</a>
+        </div>
+    </div>
+</div>
+</div>

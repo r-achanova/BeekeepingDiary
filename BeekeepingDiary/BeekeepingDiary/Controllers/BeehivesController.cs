@@ -1,15 +1,10 @@
-﻿using BeekeepingDiary.Data;
-using BeekeepingDiary.Data.Models;
-using BeekeepingDiary.Infrastructure;
+﻿using BeekeepingDiary.Infrastructure;
 using BeekeepingDiary.Models.Beehives;
 using BeekeepingDiary.Services.BeeGardens;
 using BeekeepingDiary.Services.Beehives;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace BeekeepingDiary.Controllers
 {
@@ -119,12 +114,7 @@ namespace BeekeepingDiary.Controllers
                 beehive.BeeGardens = this.beehives.AllBeeGardens(this.User.GetId());
                 return View(beehive);
             }
-
-            if (!this.beeGardens.IsByCurrentUser(id, userId))
-            {
-                return BadRequest();
-            }
-            
+           
             this.beehives.Edit(
                 id,
                 beehive.Name,
@@ -136,28 +126,13 @@ namespace BeekeepingDiary.Controllers
 
             return RedirectToAction(nameof(All), new { currentPage = 1, beehivesPerPage = 3, userId = this.User.GetId(), beeGardenId = beehive.BeeGardenId });
         }
+
+        [Authorize]
+        public IActionResult Inspections(int id)
+        {
+            return RedirectToAction("All", "Inspections", new { beehiveId = id });
+        }
     }
 
-     /*    private IEnumerable<BeehiveCategoryViewModel> GetBeehiveCategories()
-             => this.data
-                 .Categories
-                 .Select(c => new BeehiveCategoryViewModel
-                 {
-                     Id = c.Id,
-                     Name = c.Name
-                 })
-                 .ToList();
-
-         private IEnumerable<BeehiveBeeGardenServiceModel> GetCurrentUserBeeGardens()
-             => this.data
-                 .BeeGardens
-                 .Where(b => b.UserId == User.GetId())
-                 .Select(b => new BeehiveBeeGardenServiceModel
-                 {
-                     Id = b.Id,
-                     Name = b.Name,
-                     UserId=b.UserId
-                 })
-                  .ToList();*/
-    }
+}
 

@@ -54,6 +54,38 @@ namespace BeekeepingDiary.Services.Inspections
             return inspectionData.Id;
         }
 
+        public InspectionDetailsServiceModel Details(int id)
+            => this.data
+                .Inspections
+                .Where(i => i.Id == id)
+                .Select(i => new InspectionDetailsServiceModel
+                {
+                    Id = i.Id,
+                    Date = i.Date,
+                    Description = i.Description,
+                    BeehiveId=i.BeehiveId,
+                    Beehive=i.Beehive.Name,
+                    UserId = i.Beehive.BeeGarden.UserId
+                })
+                .FirstOrDefault();
+
+        public bool Edit(int inspectionId, int beehiveId, DateTime date, string description)
+        {
+            var inspectionData = this.data.Inspections.Find(inspectionId);
+            if (inspectionData == null)
+            {
+                return false;
+            }
+
+            inspectionData.Date = date;
+            inspectionData.Description = description;
+            inspectionData.BeehiveId = beehiveId;
+           
+            this.data.SaveChanges();
+
+            return true;
+        }
+
         public IEnumerable<InspectionServiceModel> GetInspectionsByBeehiveId(int beehiveId)
         {
             var query = this.data.Inspections

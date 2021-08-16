@@ -69,7 +69,7 @@ namespace BeekeepingDiary.Services.Inspections
                 })
                 .FirstOrDefault();
 
-        public bool Edit(int inspectionId, int beehiveId, DateTime date, string description)
+        public bool Edit(int inspectionId, DateTime date, string description)
         {
             var inspectionData = this.data.Inspections.Find(inspectionId);
             if (inspectionData == null)
@@ -79,7 +79,7 @@ namespace BeekeepingDiary.Services.Inspections
 
             inspectionData.Date = date;
             inspectionData.Description = description;
-            inspectionData.BeehiveId = beehiveId;
+          
            
             this.data.SaveChanges();
 

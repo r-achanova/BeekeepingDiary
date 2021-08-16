@@ -12,11 +12,11 @@ using BeekeepingDiary.Models.Inspections;
 
 namespace BeekeepingDiary.Controllers
 {
-    public class InspectionsController:Controller
+    public class InspectionsController : Controller
     {
-      private readonly IInspectionService inspections;
-      private readonly IBeehiveService beehives;
-      private readonly IBeeGardenService beeGardens;
+        private readonly IInspectionService inspections;
+        private readonly IBeehiveService beehives;
+        private readonly IBeeGardenService beeGardens;
 
         public InspectionsController(IInspectionService inspections, IBeehiveService beehives, IBeeGardenService beeGardens)
         {
@@ -26,15 +26,15 @@ namespace BeekeepingDiary.Controllers
         }
 
         [Authorize]
-        public IActionResult Add(int id)
+        public IActionResult Add([FromQuery] AllInspectionsQueryModel query) //to do update query model
         {
             return View(new InspectionFormModel
             {
-                BeehiveName = this.beehives.Details(id).BeeGarden + ": " + this.beehives.Details(id).Name
-               
+                BeehiveName = this.beehives.Details(query.BeehiveId).BeeGarden + ": " + this.beehives.Details(query.BeehiveId).Name
+
             });
         }
-
+      
         [HttpPost]
         [Authorize]
 
@@ -42,22 +42,22 @@ namespace BeekeepingDiary.Controllers
         {
             if (!ModelState.IsValid)
             {
-                inspection.BeehiveName = this.beehives.Details(inspection.Id).BeeGarden + ": " + this.beehives.Details(inspection.Id).Name;
+                inspection.BeehiveName = this.beehives.Details(inspection.BeehiveId).BeeGarden + ": " + this.beehives.Details(inspection.BeehiveId).Name;
 
 
                 return View(inspection);
             }
-
+  
             this.inspections.Create(
                  inspection.Date,
-                 inspection.Id,
+                 inspection.BeehiveId, 
                  inspection.Description
                  );
 
-            return RedirectToAction(nameof(All), new { beehiveId = inspection.Id });
+            return RedirectToAction(nameof(All), new { beehiveId = inspection.BeehiveId });
         }
 
-            [Authorize]
+        [Authorize]
         public IActionResult Edit(int id)
         {
             var userId = this.User.GetId();
@@ -71,9 +71,9 @@ namespace BeekeepingDiary.Controllers
             return View(new InspectionFormModel
             {
                 Date = inspection.Date,
-                BeehiveName = this.beehives.Details(inspection.Id).BeeGarden + ": " + this.beehives.Details(inspection.Id).Name,
-            Description= inspection.Description,
-                
+                BeehiveName = this.beehives.Details(inspection.BeehiveId).BeeGarden + ": " + this.beehives.Details(inspection.BeehiveId).Name,
+                Description = inspection.Description,
+                BeehiveId = inspection.BeehiveId
             });
         }
 
@@ -85,36 +85,34 @@ namespace BeekeepingDiary.Controllers
             var userId = this.User.GetId();
             if (!ModelState.IsValid)
             {
-                inspection.BeehiveName = this.beehives.Details(inspection.Id).BeeGarden + ": " + this.beehives.Details(inspection.Id).Name;
-
+                inspection.BeehiveName = this.beehives.Details(inspection.BeehiveId).BeeGarden + ": " + this.beehives.Details(inspection.BeehiveId).Name;
 
                 return View(inspection);
             }
-
+            inspection.BeehiveId = inspections.Details(inspection.Id).BeehiveId;
             this.inspections.Edit(
                 id,
-                inspection.Id,
-                 inspection.Date,
-                 inspection.Description
+                inspection.Date,
+                inspection.Description
                  );
-            return RedirectToAction(nameof(All), new { beehiveId = inspection.Id });
+            return RedirectToAction(nameof(All), new { beehiveId = inspection.BeehiveId });
 
-         }
+        }
 
         [Authorize]
         public IActionResult All([FromQuery] AllInspectionsQueryModel query)
         {
             var queryResult = this.inspections.All(this.User.GetId(),
                                 query.BeehiveId);
-            query.Inspections= queryResult.Inspections;
-           query.BeehiveName = this.beehives.Details(query.BeehiveId).BeeGarden + ": "
-           + this.beehives.Details(query.BeehiveId).Name;
-          
+            query.Inspections = queryResult.Inspections;
+            query.BeehiveName = this.beehives.Details(query.BeehiveId).BeeGarden + ": "
+            + this.beehives.Details(query.BeehiveId).Name;
+
             return View(query);
         }
 
-        
-        [Authorize]
+
+       /* [Authorize]
         public IActionResult Inspections([FromQuery] AllInspectionsQueryModel query, int beehiveId)
         {
             var queryResult = this.inspections.All(this.User.GetId(),
@@ -122,7 +120,7 @@ namespace BeekeepingDiary.Controllers
             query.Inspections = queryResult.Inspections;
 
             return View(query);
-        }
+        }*/
 
     }
 }

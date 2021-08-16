@@ -13,7 +13,8 @@ namespace BeekeepingDiary.Models.Inspections
 
         public DateTime Date { get; set; }
 
-       // public int BeehiveId { get; set; }
+        public int BeehiveId { get; set; }
+        public IEnumerable<InspectionBeehiveServiceModel> Beehives { get; set; }
         public string BeehiveName { get; set; }
 
         [Required]

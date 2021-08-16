@@ -10,7 +10,7 @@ namespace BeekeepingDiary.Services.Inspections
         public int Id { get; init; }
 
         public DateTime Date { get; set; }
-      //  public int BeehiveId { get; set; }
+       public int BeehiveId { get; set; }
 
        public string Beehive { get; set; }
 

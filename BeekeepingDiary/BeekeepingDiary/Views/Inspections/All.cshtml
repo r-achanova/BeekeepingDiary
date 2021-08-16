@@ -7,34 +7,14 @@
     <div class="col-md-4">
         <div class="mb-3">
             <div>
-                <a asp-controller="Inspections" asp-action="Add" asp-route-id="@Model.BeehiveId" class="btn btn-primary">Add Inspection</a>
+                <a asp-controller="Inspections" asp-action="Add" asp-route-beehiveId="@Model.BeehiveId" class="btn btn-primary">Add Inspection</a>
             </div>
         </div>
     </div>
 </div>
 
-<h1>All Inspections</h1>
+@if (!Model.Inspections.Any())
+{
+<h2 class="text-center">No inspections found!</h2>}
 
-<table class="table table-striped">
-    <thead class="thead-dark">
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Date</th>
-            <th scope="col">Description</th>
-            <th scope="col"></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var inspection in Model.Inspections)
-        {
-<tr>
-    <td scope="col">@inspection.Id</td>
-    <td scope="col">@inspection.Date</td>
-    <td scope="col">@inspection.Description.</td>
-    <td scope="col">
-        <a asp-area="" asp-controller="Inspections" asp-action="Delete" asp-route-id="@inspection.Id" class="btn btn-danger float-right ml-3">Delete</a>
-        <a asp-area="" asp-controller="Inspections" asp-action="Edit" asp-route-id="@inspection.Id" class="btn btn-warning float-right ml-3">Edit</a>
-    </td>
-</tr>}
-    </tbody>
-</table>
+<partial name="_InspectionPartial" model="@Model.Inspections" />

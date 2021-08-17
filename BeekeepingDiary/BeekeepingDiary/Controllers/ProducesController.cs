@@ -55,6 +55,52 @@ namespace BeekeepingDiary.Controllers
             return RedirectToAction(nameof(All), new { beehiveId = produce.BeehiveId });
         }
 
+
+        [Authorize]
+        public IActionResult Edit(int id)
+        {
+            var userId = this.User.GetId();
+
+            var produce = this.produces.Details(id);
+            if (produce.UserId != userId)
+            {
+                return Unauthorized();
+            }
+
+            return View(new ProduceFormModel
+            {
+                Date = produce.Date,
+                BeehiveName = this.beehives.GetBeehiveName(produce.BeehiveId),
+                HoneyKg = produce.HoneyKg,
+                HoneyType = produce.HoneyType,
+                Notes = produce.Notes
+            });
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult Edit(int id, ProduceFormModel produce)
+        {
+
+            var userId = this.User.GetId();
+            if (!ModelState.IsValid)
+            {
+                produce.BeehiveName = this.beehives.GetBeehiveName(produce.BeehiveId);
+
+                return View(produce);
+            }
+            produce.BeehiveId = produces.Details(produce.Id).BeehiveId;
+            this.produces.Edit(
+                id,
+                produce.Date,
+                produce.HoneyKg,
+                produce.HoneyType,
+                produce.Notes
+                );
+            return RedirectToAction(nameof(All), new { beehiveId = produce.BeehiveId });
+
+        }
+
         [Authorize]
         public IActionResult All([FromQuery] AllProducesQueryModel query)
         {

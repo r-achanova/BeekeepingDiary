@@ -47,9 +47,40 @@ namespace BeekeepingDiary.Services.Produces
             return produceData.Id;
         }
 
+        public ProduceDetailsServiceModel Details(int id)
+            => this.data
+                .Produces
+                .Where(p => p.Id == id)
+                .Select(p => new ProduceDetailsServiceModel
+                {
+                    Id = p.Id,
+                    Date = p.Date,
+                    HoneyKg = p.HoneyKg,
+                    HoneyType = p.HoneyType,
+                    Notes = p.Notes,
+                    BeehiveId = p.BeehiveId,
+                    Beehive = p.Beehive.Name,
+                    UserId = p.Beehive.BeeGarden.UserId
+                })
+                .FirstOrDefault();
+
         public bool Edit(int produceId, DateTime date, double honeyKg, string honeyType, string notes)
         {
-            throw new NotImplementedException();
+            var produceData = this.data.Produces.Find(produceId);
+            if (produceData == null)
+            {
+                return false;
+            }
+
+            produceData.Date = date;
+            produceData.HoneyKg = honeyKg;
+            produceData.HoneyType = honeyType;
+            produceData.Notes = notes;
+
+
+            this.data.SaveChanges();
+
+            return true;
         }
 
         public IEnumerable<ProduceServiceModel> GetProducesByBeehiveId(int beehiveId)

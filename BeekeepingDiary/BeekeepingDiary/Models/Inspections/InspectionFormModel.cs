@@ -18,6 +18,7 @@ namespace BeekeepingDiary.Models.Inspections
         public string BeehiveName { get; set; }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
     }
 }

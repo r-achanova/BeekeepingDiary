@@ -18,7 +18,7 @@ namespace BeekeepingDiary.Services.Produces
             string honeyType, 
             string notes);
 
-      //  public ProduceDetailsServiceModel Details(int id);
+        public ProduceDetailsServiceModel Details(int id);
         public bool Edit(int produceId, DateTime date, double honeyKg, string honeyType, string notes);
         public IEnumerable<ProduceServiceModel> GetProducesByBeehiveId(int beehiveId);
         public double GetAverageProduces(int beehiveId);

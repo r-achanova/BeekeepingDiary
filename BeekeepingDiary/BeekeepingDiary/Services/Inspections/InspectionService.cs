@@ -12,7 +12,7 @@ namespace BeekeepingDiary.Services.Inspections
         private readonly BeekeepingDbContext data;
         public InspectionService(BeekeepingDbContext data)
         {
-            this.data=data;
+            this.data = data;
         }
 
         public InspectionQueryServiceModel All(string userId, int beehiveId)
@@ -45,8 +45,8 @@ namespace BeekeepingDiary.Services.Inspections
             var inspectionData = new Inspection
             {
                 Date = date,
-                Description=description,
-                BeehiveId=beehiveId
+                Description = description,
+                BeehiveId = beehiveId
             };
             this.data.Inspections.Add(inspectionData);
             this.data.SaveChanges();
@@ -63,8 +63,8 @@ namespace BeekeepingDiary.Services.Inspections
                     Id = i.Id,
                     Date = i.Date,
                     Description = i.Description,
-                    BeehiveId=i.BeehiveId,
-                    Beehive=i.Beehive.Name,
+                    BeehiveId = i.BeehiveId,
+                    Beehive = i.Beehive.Name,
                     UserId = i.Beehive.BeeGarden.UserId
                 })
                 .FirstOrDefault();
@@ -79,8 +79,8 @@ namespace BeekeepingDiary.Services.Inspections
 
             inspectionData.Date = date;
             inspectionData.Description = description;
-          
-           
+
+
             this.data.SaveChanges();
 
             return true;
@@ -95,20 +95,11 @@ namespace BeekeepingDiary.Services.Inspections
                     Id = x.Id,
                     Date = x.Date,
                     Beehive = x.Beehive.Name,
-                    Description=x.Description
+                    Description = x.Description
                 })
                 .ToList();
             return query;
         }
 
-        public IEnumerable<InspectionServiceModel> GetInspectionsByUserId(int userId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public InspectionQueryServiceModel Mine(int currentPage, int beehivesPerPage, string userId)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -20,9 +20,6 @@ namespace BeekeepingDiary.Services.Inspections
         public bool Edit(int inspectionId, DateTime date, string description);
         public IEnumerable<InspectionBeehiveServiceModel> AllBeehives(string userId);
         public IEnumerable<InspectionServiceModel> GetInspectionsByBeehiveId(int beehiveId);
-        public IEnumerable<InspectionServiceModel> GetInspectionsByUserId(int userId);
-        public InspectionQueryServiceModel Mine(int currentPage, int beehivesPerPage, string userId);
-
-
+        
     }
 }

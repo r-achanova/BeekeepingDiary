@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using System.Security.Claims;
+
+using static BeekeepingDiary.Areas.Admin.AdminConstants;
 
 namespace BeekeepingDiary.Infrastructure
 {
@@ -10,5 +8,9 @@ namespace BeekeepingDiary.Infrastructure
     {
         public static string GetId(this ClaimsPrincipal user)
             => user.FindFirst(ClaimTypes.NameIdentifier).Value;
+
+        public static bool IsAdmin(this ClaimsPrincipal user)
+    => user.IsInRole(AdministratorRoleName);
     }
+
 }

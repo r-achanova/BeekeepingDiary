@@ -15,7 +15,32 @@ namespace BeekeepingDiary.Services.BeeGardens
             this.data = data;
         }
 
-        public BeeGardenQueryServiceModel All(int currentPage, int beeGardensPerPage, string userId)
+        public BeeGardenQueryServiceModel All()
+        {
+            var beeGardensQuery = this.data.BeeGardens.AsQueryable();
+            beeGardensQuery = beeGardensQuery.OrderByDescending(b => b.Year);
+            var totalBeeGardens = beeGardensQuery.Count();
+
+            var beeGardens = beeGardensQuery
+            .Select(b => new BeeGardenServiceModel
+            {
+                Id = b.Id,
+                Name = b.Name,
+                Location = b.Location,
+                Year = b.Year,
+                ImageUrl = b.ImageUrl,
+                UserId = b.ApplicationUser.UserName // todo update
+            })
+            .ToList();
+
+            return new BeeGardenQueryServiceModel
+            {
+                TotalBeeGardens = totalBeeGardens,
+                BeeGardens = beeGardens
+            };
+        }
+
+        public BeeGardenQueryServiceModel AllForUser(int currentPage, int beeGardensPerPage, string userId)
         {
             var beeGardensQuery = this.data.BeeGardens.Where(b => b.UserId == userId).AsQueryable();
             beeGardensQuery = beeGardensQuery.OrderByDescending(b => b.Year);

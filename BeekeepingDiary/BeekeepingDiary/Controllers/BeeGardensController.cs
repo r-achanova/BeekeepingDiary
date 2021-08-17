@@ -20,7 +20,7 @@ namespace BeekeepingDiary.Controllers
         [Authorize]
         public IActionResult All([FromQuery] AllBeeGardensQueryModel query)
         {
-            var queryResult = this.beeGardens.All(
+            var queryResult = this.beeGardens.AllForUser(
                 query.CurrentPage,
                 AllBeeGardensQueryModel.BeeGardensPerPage,
                 this.User.GetId());

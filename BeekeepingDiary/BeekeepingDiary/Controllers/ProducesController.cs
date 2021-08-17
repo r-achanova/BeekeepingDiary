@@ -26,8 +26,8 @@ namespace BeekeepingDiary.Controllers
         {
             return View(new ProduceFormModel
             {
-                BeehiveName = this.beehives.GetBeehiveName(query.BeehiveId)
-
+                BeehiveName = this.beehives.GetBeehiveName(query.BeehiveId),
+                Date = DateTime.Now
             });
         }
 

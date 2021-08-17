@@ -30,8 +30,8 @@ namespace BeekeepingDiary.Controllers
         {
             return View(new InspectionFormModel
             {
-                BeehiveName = this.beehives.GetBeehiveName(query.BeehiveId)
-
+                BeehiveName = this.beehives.GetBeehiveName(query.BeehiveId),
+                Date = DateTime.Now
             });
         }
       

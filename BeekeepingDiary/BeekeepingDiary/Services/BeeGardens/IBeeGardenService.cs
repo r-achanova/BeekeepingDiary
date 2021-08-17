@@ -7,11 +7,12 @@ namespace BeekeepingDiary.Services.BeeGardens
 {
     public interface IBeeGardenService
     {
-        BeeGardenQueryServiceModel All(
+        BeeGardenQueryServiceModel All();
+
+        BeeGardenQueryServiceModel AllForUser(
             int currentPage,
             int beeGardensPerPage,
             string userId);
-       // IEnumerable<BeeGardenServiceModel> ByUser(string userId);
         BeeGardenServiceModel Details(int beeGardenId);
         int Create(
             string name,

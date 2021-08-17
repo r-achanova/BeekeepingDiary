@@ -4,6 +4,7 @@ using BeekeepingDiary.Infrastructure;
 using BeekeepingDiary.Services.BeeGardens;
 using BeekeepingDiary.Services.Beehives;
 using BeekeepingDiary.Services.Inspections;
+using BeekeepingDiary.Services.Produces;
 using BeekeepingDiary.Services.Statistics;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -55,6 +56,7 @@ namespace BeekeepingDiary
             services.AddTransient<IBeeGardenService, BeeGardenService>();
             services.AddTransient<IBeehiveService, BeehiveService>();
             services.AddTransient<IInspectionService, InspectionService>();
+            services.AddTransient<IProduceService, ProduceService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

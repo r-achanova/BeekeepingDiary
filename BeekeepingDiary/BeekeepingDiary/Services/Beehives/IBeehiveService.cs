@@ -35,5 +35,6 @@ namespace BeekeepingDiary.Services.Beehives
             string userId);
 
         public BeehiveDetailsServiceModel Details(int beehiveId);
+        public string GetBeehiveName(int beehiveId);
     }
 }

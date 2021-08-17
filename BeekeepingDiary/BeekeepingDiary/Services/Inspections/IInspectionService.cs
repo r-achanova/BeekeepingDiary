@@ -5,20 +5,20 @@ using System.Threading.Tasks;
 
 namespace BeekeepingDiary.Services.Inspections
 {
-  public  interface IInspectionService
+    public interface IInspectionService
     {
 
         public InspectionQueryServiceModel All(
-            string userId, 
+            string userId,
             int beehiveId);
         int Create(
-            DateTime date, 
-            int beehiveId, 
+            DateTime date,
+            int beehiveId,
             string description);
 
         public InspectionDetailsServiceModel Details(int id);
         public bool Edit(int inspectionId, DateTime date, string description);
-       public IEnumerable<InspectionBeehiveServiceModel> AllBeehives(string userId);
+        public IEnumerable<InspectionBeehiveServiceModel> AllBeehives(string userId);
         public IEnumerable<InspectionServiceModel> GetInspectionsByBeehiveId(int beehiveId);
         public IEnumerable<InspectionServiceModel> GetInspectionsByUserId(int userId);
         public InspectionQueryServiceModel Mine(int currentPage, int beehivesPerPage, string userId);

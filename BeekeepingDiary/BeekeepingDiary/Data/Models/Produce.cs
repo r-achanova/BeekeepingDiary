@@ -14,6 +14,8 @@ namespace BeekeepingDiary.Data.Models
         public int BeehiveId { get; set; }
         public Beehive Beehive { get; set; }
 
+        [Required]
+        [Range(HoneyTypeMinKg, HoneyTypeMaxKg)]
         public double HoneyKg { get; set; }
 
         [Required]

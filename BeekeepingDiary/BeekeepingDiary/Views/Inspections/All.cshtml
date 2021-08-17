@@ -16,5 +16,6 @@
 @if (!Model.Inspections.Any())
 {
 <h2 class="text-center">No inspections found!</h2>}
-
-<partial name="_InspectionPartial" model="@Model.Inspections" />
+else
+{
+<partial name="_InspectionPartial" model="@Model.Inspections" />}

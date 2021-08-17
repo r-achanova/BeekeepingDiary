@@ -9,10 +9,9 @@
         <div class="card-body text-center">
             <h5 class="card-title text-center">@beehive.Name in @beehive.BeeGarden - @beehive.Year</h5>
             <a asp-controller="Beehives" asp-action="Inspections" asp-route-id="@beehive.Id" class="btn btn-primary">Inspections</a>
-            
-            
-        <a asp-controller="Beehives" asp-action="Edit" asp-route-id="@beehive.Id" class="btn btn-warning">Edit</a>
-        <a asp-controller="Beehives" asp-action="Delete" asp-route-id="@beehive.Id" class="btn btn-danger">Delete</a>
+            <a asp-controller="Beehives" asp-action="Produces" asp-route-id="@beehive.Id" class="btn btn-primary">Produces</a>
+            <a asp-controller="Beehives" asp-action="Edit" asp-route-id="@beehive.Id" class="btn btn-warning">Edit</a>
+            <a asp-controller="Beehives" asp-action="Delete" asp-route-id="@beehive.Id" class="btn btn-danger">Delete</a>
         </div>
     </div>
 </div>}

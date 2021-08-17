@@ -28,6 +28,8 @@
             public const int DescriptionMinLength = 10;
             public const int HoneyTypeMinLength = 2;
             public const int HoneyTypeMaxLength = 20;
+            public const int HoneyTypeMinKg = 0;
+            public const int HoneyTypeMaxKg = 200;
 
         }
 

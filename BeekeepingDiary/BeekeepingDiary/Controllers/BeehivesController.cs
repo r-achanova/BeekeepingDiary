@@ -132,6 +132,12 @@ namespace BeekeepingDiary.Controllers
         {
             return RedirectToAction("All", "Inspections", new { beehiveId = id });
         }
+
+        [Authorize]
+        public IActionResult Produces(int id)
+        {
+            return RedirectToAction("All", "Produces", new { beehiveId = id });
+        }
     }
 
 }

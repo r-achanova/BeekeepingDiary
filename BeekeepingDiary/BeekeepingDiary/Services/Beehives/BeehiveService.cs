@@ -178,6 +178,14 @@ namespace BeekeepingDiary.Services.Beehives
                 .FirstOrDefault();
             return beehiveBeeGardenId == beeGardenId;
         }
+
+        public string GetBeehiveName(int beehiveId)
+        {
+            return this.data
+                .Beehives
+                .Where(b => b.Id == beehiveId)
+                .Select(b => b.BeeGarden.Name + ": " + b.Name).FirstOrDefault();
+        }
      
     }
 }

@@ -1,0 +1,32 @@
+﻿@model IEnumerable<ProduceServiceModel>
+
+<h1>All Produces</h1>
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Date</th>
+            <th scope="col">HoneyKg</th>
+            <th scope="col">HoneyType</th>
+            <th scope="col">Notes</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var produce in Model)
+        {
+<tr>
+    <td scope="col">@produce.Id</td>
+    <td scope="col">@produce.Date</td>
+    <td scope="col">@produce.HoneyKg</td>
+    <td scope="col">@produce.HoneyType</td>
+    <td scope="col">@produce.Notes</td>
+    <td scope="col">
+        <a asp-area="" asp-controller="Inspections" asp-action="Delete" asp-route-id="@produce.Id" class="btn btn-danger float-right ml-3">Delete</a>
+        <a asp-area="" asp-controller="Inspections" asp-action="Edit" asp-route-id="@produce.Id" class="btn btn-warning float-right ml-3">Edit</a>
+    </td>
+</tr>
+}
+    </tbody>
+</table>

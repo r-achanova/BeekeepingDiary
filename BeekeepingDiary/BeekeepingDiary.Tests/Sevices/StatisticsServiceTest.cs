@@ -23,7 +23,7 @@ namespace BeekeepingDiary.Tests.Sevices
         
        
         [Fact]
-        public void IsStatisticsServiceTotalWorksCorrectly()
+        public void IsStatisticsServiceTotalCorrect()
         {
 
             //Arrange

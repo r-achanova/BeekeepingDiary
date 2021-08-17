@@ -10,7 +10,7 @@ using Xunit;
 
 namespace BeekeepingDiary.Tests.Sevices
 {
-   public class BeeGardenServiceTest
+    public class BeeGardenServiceTest
     {
         private const string BeeGardenName = "BeeGardenNameTest";
         private const string BeeGardenLocation = "LocationTest";
@@ -31,14 +31,14 @@ namespace BeekeepingDiary.Tests.Sevices
 
             //Act
             var result = beeGardenService.Create(
-                BeeGardenName, 
-                BeeGardenLocation, 
-                BeeGardenImageUrl, 
-                BeeGardenYear, 
+                BeeGardenName,
+                BeeGardenLocation,
+                BeeGardenImageUrl,
+                BeeGardenYear,
                 BeeGardenUserId);
 
-                //Assert
-            Assert.NotEqual(0,result);
+            //Assert
+            Assert.NotEqual(0, result);
         }
 
         [Fact]
@@ -50,23 +50,23 @@ namespace BeekeepingDiary.Tests.Sevices
 
             var beeGardenService = new BeeGardenService(data);
             var beeGardenIdTest = beeGardenService.Create(
-                BeeGardenName, 
-                BeeGardenLocation, 
-                BeeGardenImageUrl, 
-                BeeGardenYear, 
+                BeeGardenName,
+                BeeGardenLocation,
+                BeeGardenImageUrl,
+                BeeGardenYear,
                 BeeGardenUserId);
 
             //Act
 
             var result = beeGardenService.Edit(
-                beeGardenIdTest, 
-                NewBeeGardenName, 
-                BeeGardenLocation, 
-                BeeGardenImageUrl, 
+                beeGardenIdTest,
+                NewBeeGardenName,
+                BeeGardenLocation,
+                BeeGardenImageUrl,
                 BeeGardenYear);
             var beeGarden = data.BeeGardens.FirstOrDefault(b => b.Id == beeGardenIdTest).Name;
-           //Assert
-           Assert.True(result);
+            //Assert
+            Assert.True(result);
             Assert.Equal(NewBeeGardenName, beeGarden);
         }
 
@@ -84,11 +84,11 @@ namespace BeekeepingDiary.Tests.Sevices
                 BeeGardenImageUrl,
                 BeeGardenYear,
                 BeeGardenUserId);
-           
+
 
             //Act
             var result = beeGardenService.Details(beeGardenIdTest);
-            
+
             //Assert
             Assert.Equal(BeeGardenName, result.Name);
             Assert.Equal(BeeGardenLocation, result.Location);

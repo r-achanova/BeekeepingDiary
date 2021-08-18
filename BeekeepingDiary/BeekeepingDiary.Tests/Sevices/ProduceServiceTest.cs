@@ -8,7 +8,7 @@ using Xunit;
 
 namespace BeekeepingDiary.Tests.Sevices
 {
-   public class ProduceServiceTest
+    public class ProduceServiceTest
     {
         private DateTime date = DateTime.Now;
         private const int BeehiveId = 1;
@@ -21,7 +21,7 @@ namespace BeekeepingDiary.Tests.Sevices
         private const int CategoryId = 1;
         private const string ImageUrl = "ImageUrlTest";
         private const int Year = 2020;
-        
+
         private const string BeeGardenName = "BeeGardenNameTest";
         private const string BeeGardenLocation = "LocationTest";
         private const string BeeGardenImageUrl = "ImageUrlTest";
@@ -84,7 +84,7 @@ namespace BeekeepingDiary.Tests.Sevices
                 Notes
                 );
             var produceHoheyKg = data.Produces.FirstOrDefault(i => i.Id == produceIdTest).HoneyKg;
-            
+
             //Assert
             Assert.True(result);
             Assert.Equal(NewHoneyKg, produceHoheyKg);
@@ -116,24 +116,68 @@ namespace BeekeepingDiary.Tests.Sevices
                  );
 
             var produceService = new ProduceService(data);
-            var produceIdTest = produceService.Create(
+            var produceId = produceService.Create(
                 date,
-                BeehiveId,
+                beehiveId,
                 HoneyKg,
                 HoneyType,
                 Notes
                 );
-           
+
             //Act
             var result = produceService.Details(
-                produceIdTest);
+                produceId);
 
             //Assert
             Assert.Equal(date, result.Date);
-            Assert.Equal(BeehiveId, result.BeehiveId); 
-            Assert.Equal(HoneyKg, result.HoneyKg); 
-            Assert.Equal(HoneyType, result.HoneyType); 
+            Assert.Equal(BeehiveId, result.BeehiveId);
+            Assert.Equal(HoneyKg, result.HoneyKg);
+            Assert.Equal(HoneyType, result.HoneyType);
             Assert.Equal(Notes, result.Notes);
         }
+        [Fact]
+        public void IsProduceServiceDeleteProduceById()
+        {
+
+            //Arrange
+            var data = DatabaseMock.Instance;
+            var beeGardenService = new BeeGardenService(data);
+
+            var beeGardenId = beeGardenService.Create(
+                BeeGardenName,
+                BeeGardenLocation,
+                BeeGardenImageUrl,
+                BeeGardenYear,
+                BeeGardenUserId);
+
+            var beehiveService = new BeehiveService(data);
+
+            var beehiveId = beehiveService.Create(
+                 Name,
+                 ImageUrl,
+                 Year,
+                 CategoryId,
+                 beeGardenId
+                 );
+
+            var produceService = new ProduceService(data);
+            var produceId = produceService.Create(
+                date,
+                beehiveId,
+                HoneyKg,
+                HoneyType,
+                Notes
+                );
+
+
+            //Act
+            var result = produceService.Delete(produceId); 
+            var currentProduce = data.Produces.FirstOrDefault(i => i.Id == produceId);
+
+            //Assert
+            Assert.True(result);
+            Assert.Null(currentProduce);
+          }
+
     }
 }

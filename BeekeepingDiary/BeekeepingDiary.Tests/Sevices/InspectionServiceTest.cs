@@ -103,7 +103,7 @@ namespace BeekeepingDiary.Tests.Sevices
                  beeGardenId
                  );
             var inspectionService = new InspectionService(data);
-            var inspectionIdTest = inspectionService.Create(
+            var inspectionId = inspectionService.Create(
                 date,
                 beehiveId,
                 Description
@@ -111,12 +111,52 @@ namespace BeekeepingDiary.Tests.Sevices
 
             //Act
             var result = inspectionService.Details(
-                inspectionIdTest);
+                inspectionId);
 
             //Assert
             Assert.Equal(Description, result.Description);
             Assert.Equal(date, result.Date);
             Assert.Equal(BeehiveId, result.BeehiveId);
+        }
+
+        [Fact]
+        public void IsInspectionServiceDeleteInspectionById()
+        {
+
+            //Arrange
+            var data = DatabaseMock.Instance;
+            var beeGardenService = new BeeGardenService(data);
+
+            var beeGardenId = beeGardenService.Create(
+                BeeGardenName,
+                BeeGardenLocation,
+                BeeGardenImageUrl,
+                BeeGardenYear,
+                BeeGardenUserId);
+
+            var beehiveService = new BeehiveService(data);
+
+            var beehiveId = beehiveService.Create(
+                 Name,
+                 ImageUrl,
+                 Year,
+                 CategoryId,
+                 beeGardenId
+                 );
+            var inspectionService = new InspectionService(data);
+            var inspectionId = inspectionService.Create(
+                date,
+                beehiveId,
+                Description
+                );
+
+            //Act
+            var result = inspectionService.Delete(inspectionId);
+            var currentInspection = data.Inspections.FirstOrDefault(i => i.Id == inspectionId);
+
+            //Assert
+            Assert.True(result);
+            Assert.Null(currentInspection);
         }
     }
 }

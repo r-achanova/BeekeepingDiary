@@ -77,6 +77,22 @@ namespace BeekeepingDiary.Controllers
             });
         }
 
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var userId = this.User.GetId();
+
+            var produce = this.produces.Details(id);
+            if (produce.UserId != userId)
+            {
+                return Unauthorized();
+            }
+            this.produces.Delete(id);
+
+            return this.RedirectToAction(nameof(All), new { beehiveId = produce.BeehiveId });
+        }
+
+
         [HttpPost]
         [Authorize]
         public IActionResult Edit(int id, ProduceFormModel produce)

@@ -20,5 +20,6 @@ namespace BeekeepingDiary.Services.Produces
         public IEnumerable<ProduceServiceModel> GetProducesByBeehiveId(int beehiveId);
         public double GetAverageProduces(int beehiveId);
         public double GetTotalProduces(int beehiveId);
+        public bool Delete(int produceId);
     }
 }

@@ -10,7 +10,7 @@ namespace BeekeepingDiary.Controllers
     public class BeeGardensController : Controller
     {
         private readonly IBeeGardenService beeGardens;
-      
+
         public BeeGardensController(IBeeGardenService beeGardens)
         {
             this.beeGardens = beeGardens;
@@ -33,10 +33,10 @@ namespace BeekeepingDiary.Controllers
         [Authorize]
         public IActionResult Details(int id)
         {
-           return RedirectToAction("All", "Beehives", new { beeGardenId = id });
+            return RedirectToAction("All", "Beehives", new { beeGardenId = id });
         }
 
-        
+
         [Authorize]
         public IActionResult Add()
         {
@@ -52,14 +52,14 @@ namespace BeekeepingDiary.Controllers
                 return View(beeGarden);
             }
 
-            var id=this.beeGardens.Create(
+            var id = this.beeGardens.Create(
                 beeGarden.Name,
                 beeGarden.Location,
                 beeGarden.ImageUrl,
                 beeGarden.Year,
                 this.User.GetId());
 
-           return RedirectToAction("All", "Beehives",new {beeGardenId=id});
+            return RedirectToAction("All", "Beehives", new { beeGardenId = id });
         }
 
         [Authorize]

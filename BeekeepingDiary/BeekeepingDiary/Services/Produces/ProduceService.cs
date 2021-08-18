@@ -121,6 +121,14 @@ namespace BeekeepingDiary.Services.Produces
             return 0;
         }
 
-        
+        public bool Delete(int produceId)
+        {
+            var produce = this.data.Produces.FirstOrDefault(x => x.Id == produceId);
+
+            this.data.Produces.Remove(produce);
+
+            this.data.SaveChanges();
+            return true;
+        }
     }
 }

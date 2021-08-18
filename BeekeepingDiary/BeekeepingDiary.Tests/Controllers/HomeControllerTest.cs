@@ -3,7 +3,9 @@ using BeekeepingDiary.Data.Models;
 using BeekeepingDiary.Services.BeeGardens;
 using BeekeepingDiary.Services.Statistics;
 using BeekeepingDiary.Tests.Mocs;
+using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using MyTested.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,37 @@ namespace BeekeepingDiary.Tests.Controllers
             Assert.NotNull(result);
             Assert.IsType<ViewResult>(result);
         }
+
+        
+        [Fact]
+        public void ErrorActionShouldReturnView()
+            => MyController<HomeController>
+                .Instance()
+                .Calling(c => c.Error())
+                .ShouldReturn()
+                .View();
+
+        [Fact]
+        public void ErrorShouldBeMapped()
+            => MyRouting
+                .Configuration()
+                .ShouldMap("/Home/Error")
+                .To<HomeController>(c => c.Error());
+
+        [Fact]
+        public void IndexActionShouldReturnView()
+            => MyController<HomeController>
+                .Instance()
+                .Calling(c => c.Index())
+                .ShouldReturn()
+                .View();
+
+        [Fact]
+        public void IndexShouldBeMapped()
+            => MyRouting
+                .Configuration()
+                .ShouldMap("/")
+                .To<HomeController>(c => c.Index());
 
         [Fact]
         public void IndexShouldReturnViewWithCorrectModel()

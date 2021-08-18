@@ -1,4 +1,5 @@
 ﻿using BeekeepingDiary.Data;
+using BeekeepingDiary.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -18,7 +19,11 @@ namespace BeekeepingDiary.Tests.Mocs
                     .UseInMemoryDatabase(Guid.NewGuid().ToString())
                     .Options;
 
-                return new BeekeepingDbContext(dbContextOptions);
+                var context = new BeekeepingDbContext(dbContextOptions);
+                // seed DB categories
+                var category = context.Categories.Add(new Category { Name = "Дадан Блат 12" });
+                context.SaveChanges();
+                return context;
             }
         }
     }

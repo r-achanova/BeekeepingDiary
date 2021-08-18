@@ -1,11 +1,6 @@
-﻿using BeekeepingDiary.Data.Models;
+﻿using System.Linq;
 using BeekeepingDiary.Services.BeeGardens;
 using BeekeepingDiary.Tests.Mocs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BeekeepingDiary.Tests.Sevices
@@ -27,7 +22,6 @@ namespace BeekeepingDiary.Tests.Sevices
             var data = DatabaseMock.Instance;
 
             var beeGardenService = new BeeGardenService(data);
-
 
             //Act
             var result = beeGardenService.Create(
@@ -65,13 +59,14 @@ namespace BeekeepingDiary.Tests.Sevices
                 BeeGardenImageUrl,
                 BeeGardenYear);
             var beeGarden = data.BeeGardens.FirstOrDefault(b => b.Id == beeGardenIdTest).Name;
+            
             //Assert
             Assert.True(result);
             Assert.Equal(NewBeeGardenName, beeGarden);
         }
 
         [Fact]
-        public void IsBeeGardenServiceReturnDetailsBeeGarden()
+        public void IsBeeGardenServiceDetailsReturnBeeGarden()
         {
 
             //Arrange
@@ -97,14 +92,5 @@ namespace BeekeepingDiary.Tests.Sevices
             Assert.Equal(BeeGardenUserId, result.UserId);
         }
 
-        /*private static IBeeGardenService GetBeeGardenService()
-        {
-            var data = DatabaseMock.Instance;
-
-            data.BeeGardens.Add(new BeeGarden { Name = BeeGardenName });
-            data.SaveChanges();
-
-            return new BeeGardenService(data);
-        }*/
     }
 }

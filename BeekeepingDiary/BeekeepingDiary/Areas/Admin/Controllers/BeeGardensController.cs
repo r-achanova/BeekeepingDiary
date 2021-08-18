@@ -1,4 +1,5 @@
-﻿using BeekeepingDiary.Services.BeeGardens;
+﻿using System.Linq;
+using BeekeepingDiary.Services.BeeGardens;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BeekeepingDiary.Areas.Admin.Controllers
@@ -14,7 +15,7 @@ namespace BeekeepingDiary.Areas.Admin.Controllers
         }
         public IActionResult All()
         {
-            var beeGardens = this.beeGardens.All().BeeGardens;
+            var beeGardens = this.beeGardens.All().BeeGardens.OrderBy(x=>x.UserId).ThenByDescending(x=>x.Year);
 
             return View(beeGardens);
         }

@@ -101,5 +101,15 @@ namespace BeekeepingDiary.Services.Inspections
             return query;
         }
 
+        public bool Delete(int inspectionId)
+        {
+            var inspection = this.data.Inspections.FirstOrDefault(x => x.Id == inspectionId);
+
+            this.data.Inspections.Remove(inspection);
+
+            this.data.SaveChanges();
+            return true;
+        }
+
     }
 }

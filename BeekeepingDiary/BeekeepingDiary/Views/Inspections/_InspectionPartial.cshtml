@@ -19,7 +19,7 @@
     <td scope="col">@inspection.Date</td>
     <td scope="col">@inspection.Description</td>
     <td scope="col">
-        <a asp-area="" asp-controller="Inspections" asp-action="Delete" asp-route-id="@inspection.Id" class="btn btn-danger float-right ml-3">Delete</a>
+        <a asp-area="" asp-controller="Inspections" asp-action="Delete" asp-route-id="@inspection.Id" asp-route-beehiveId="@inspection.BeehiveId" class="btn btn-danger float-right ml-3">Delete</a>
         <a asp-area="" asp-controller="Inspections" asp-action="Edit" asp-route-id="@inspection.Id" class="btn btn-warning float-right ml-3">Edit</a>
     </td>
 </tr>}

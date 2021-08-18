@@ -101,5 +101,20 @@ namespace BeekeepingDiary.Controllers
 
             return View(query);
         }
+
+        [Authorize]
+        public IActionResult Delete(int id)
+        {
+            var userId = this.User.GetId();
+
+            var inspection = this.inspections.Details(id);
+            if (inspection.UserId != userId)
+            {
+                return Unauthorized();
+            }
+            this.inspections.Delete(id);
+
+            return this.RedirectToAction(nameof(All), new { beehiveId = inspection.BeehiveId });
+        }
     }
 }

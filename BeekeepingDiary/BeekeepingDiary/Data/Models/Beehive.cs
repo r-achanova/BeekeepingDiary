@@ -11,8 +11,6 @@ namespace BeekeepingDiary.Data.Models
         
         [MaxLength(NameMaxLength)]
         public string Name { get; set; }
-
-      
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
@@ -21,7 +19,6 @@ namespace BeekeepingDiary.Data.Models
 
         [Required]
         public string ImageUrl { get; set; }
-
         public int Year { get; set; }
         public IEnumerable<Inspection> Inspections { get; init; } = new List<Inspection>();
         public IEnumerable<Produce> Produces { get; init; } = new List<Produce>();

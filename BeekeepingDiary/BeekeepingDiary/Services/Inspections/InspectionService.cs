@@ -1,9 +1,8 @@
-﻿using BeekeepingDiary.Data;
-using BeekeepingDiary.Data.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using BeekeepingDiary.Data;
+using BeekeepingDiary.Data.Models;
 
 namespace BeekeepingDiary.Services.Inspections
 {
@@ -48,6 +47,7 @@ namespace BeekeepingDiary.Services.Inspections
                 Description = description,
                 BeehiveId = beehiveId
             };
+
             this.data.Inspections.Add(inspectionData);
             this.data.SaveChanges();
 

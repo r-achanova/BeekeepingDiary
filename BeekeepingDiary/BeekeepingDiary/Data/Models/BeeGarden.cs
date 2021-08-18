@@ -12,7 +12,9 @@ namespace BeekeepingDiary.Data.Models
         [Required]
         [MaxLength(NameMaxLength)]
         public string Name { get; set; }
+        
         public string UserId { get; set; }
+        
         public virtual ApplicationUser ApplicationUser { get; init; }
 
         [Required]

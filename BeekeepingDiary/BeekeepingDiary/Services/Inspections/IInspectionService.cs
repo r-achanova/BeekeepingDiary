@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BeekeepingDiary.Services.Inspections
 {
     public interface IInspectionService
     {
-
         public InspectionQueryServiceModel All(
             string userId,
             int beehiveId);

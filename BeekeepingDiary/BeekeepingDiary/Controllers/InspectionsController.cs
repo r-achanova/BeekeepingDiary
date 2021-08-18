@@ -1,13 +1,9 @@
-﻿using BeekeepingDiary.Services.BeeGardens;
+﻿using System;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using BeekeepingDiary.Services.Beehives;
 using BeekeepingDiary.Services.Inspections;
 using BeekeepingDiary.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
 using BeekeepingDiary.Models.Inspections;
 
 namespace BeekeepingDiary.Controllers
@@ -16,15 +12,12 @@ namespace BeekeepingDiary.Controllers
     {
         private readonly IInspectionService inspections;
         private readonly IBeehiveService beehives;
-        private readonly IBeeGardenService beeGardens;
-
-        public InspectionsController(IInspectionService inspections, IBeehiveService beehives, IBeeGardenService beeGardens)
+        
+        public InspectionsController(IInspectionService inspections, IBeehiveService beehives)
         {
-            this.beeGardens = beeGardens;
             this.beehives = beehives;
             this.inspections = inspections;
         }
-
         [Authorize]
         public IActionResult Add([FromQuery] InspectionQueryModel query)
         {
@@ -37,7 +30,6 @@ namespace BeekeepingDiary.Controllers
       
         [HttpPost]
         [Authorize]
-
         public IActionResult Add(InspectionFormModel inspection)
         {
             if (!ModelState.IsValid)
@@ -109,6 +101,5 @@ namespace BeekeepingDiary.Controllers
 
             return View(query);
         }
-
     }
 }

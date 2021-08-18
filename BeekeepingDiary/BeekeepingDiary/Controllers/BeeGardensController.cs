@@ -1,9 +1,7 @@
-﻿using BeekeepingDiary.Data;
-using BeekeepingDiary.Data.Models;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using BeekeepingDiary.Models.BeeGardens;
 using BeekeepingDiary.Services.BeeGardens;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using BeekeepingDiary.Infrastructure;
 
 
@@ -17,6 +15,7 @@ namespace BeekeepingDiary.Controllers
         {
             this.beeGardens = beeGardens;
         }
+
         [Authorize]
         public IActionResult All([FromQuery] AllBeeGardensQueryModel query)
         {
@@ -37,14 +36,7 @@ namespace BeekeepingDiary.Controllers
            return RedirectToAction("All", "Beehives", new { beeGardenId = id });
         }
 
-        /* [Authorize]
-         public IActionResult Mine()
-         {
-             var myBeeGardens = this.beeGardens.ByUser(this.User.GetId());
-
-             return View(myBeeGardens);
-         }
-        */
+        
         [Authorize]
         public IActionResult Add()
         {
@@ -117,6 +109,5 @@ namespace BeekeepingDiary.Controllers
 
             return RedirectToAction(nameof(All));
         }
-
     }
 }

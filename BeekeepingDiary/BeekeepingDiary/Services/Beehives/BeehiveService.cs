@@ -1,11 +1,7 @@
-﻿using BeekeepingDiary.Data;
-using BeekeepingDiary.Data.Models;
-using BeekeepingDiary.Services.Beehives;
-using BeekeepingDiary.Models.Beehives;
-using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BeekeepingDiary.Data;
+using BeekeepingDiary.Data.Models;
 
 namespace BeekeepingDiary.Services.Beehives
 {
@@ -56,10 +52,8 @@ namespace BeekeepingDiary.Services.Beehives
             };
         }
 
-       
         public IEnumerable<BeehiveBeeGardenServiceModel> AllBeeGardens(string userId)
         {
-
             var beeGardens = this.data
                   .BeeGardens
                   .Where(b => b.UserId == userId)
@@ -109,9 +103,9 @@ namespace BeekeepingDiary.Services.Beehives
                     Name = c.Name,
                     Year = c.Year,
                     ImageUrl = c.ImageUrl,
-                    CategoryId=c.CategoryId,
+                    CategoryId = c.CategoryId,
                     Category = c.Category.Name,
-                    BeeGardenId=c.BeeGardenId,
+                    BeeGardenId = c.BeeGardenId,
                     BeeGarden = c.BeeGarden.Name,
                     UserId = c.BeeGarden.UserId
                 })
@@ -128,12 +122,11 @@ namespace BeekeepingDiary.Services.Beehives
             beehiveData.Year = year;
             beehiveData.ImageUrl = imageUrl;
             beehiveData.CategoryId = categoryId;
-           beehiveData.BeeGardenId = beeGardenId;
+            beehiveData.BeeGardenId = beeGardenId;
 
             this.data.SaveChanges();
 
             return true;
-
         }
 
         public IEnumerable<BeehiveServiceModel> GetBeehivesByBeeGardenId(int beeGardenId)
@@ -186,6 +179,5 @@ namespace BeekeepingDiary.Services.Beehives
                 .Where(b => b.Id == beehiveId)
                 .Select(b => b.BeeGarden.Name + ": " + b.Name).FirstOrDefault();
         }
-     
     }
 }

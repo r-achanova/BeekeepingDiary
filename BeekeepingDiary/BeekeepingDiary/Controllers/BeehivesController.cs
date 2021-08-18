@@ -1,24 +1,25 @@
-﻿using BeekeepingDiary.Infrastructure;
-using BeekeepingDiary.Models.Beehives;
-using BeekeepingDiary.Services.BeeGardens;
-using BeekeepingDiary.Services.Beehives;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
+using BeekeepingDiary.Infrastructure;
+using BeekeepingDiary.Models.Beehives;
+using BeekeepingDiary.Services.Beehives;
 
 namespace BeekeepingDiary.Controllers
 {
     public class BeehivesController:Controller
     {
-       
         private readonly IBeehiveService beehives;
-        private readonly IBeeGardenService beeGardens;
-
-        public BeehivesController(IBeeGardenService beeGardens, IBeehiveService beehives)
+        
+        public BeehivesController(IBeehiveService beehives)
         {
-            this.beeGardens = beeGardens;
-            this.beehives = beehives;
+           this.beehives = beehives;
         }
+
+        public void Details()
+        {
+            throw new System.NotImplementedException();
+        }
+
         [Authorize]
         public IActionResult All([FromQuery] AllBeehivesQueryModel query)
         {
@@ -105,7 +106,6 @@ namespace BeekeepingDiary.Controllers
         [Authorize]
         public IActionResult Edit(int id, BeehiveFormModel beehive)
         {
-
             var userId = this.User.GetId();
 
             if (!ModelState.IsValid)
@@ -139,6 +139,5 @@ namespace BeekeepingDiary.Controllers
             return RedirectToAction("All", "Produces", new { beehiveId = id });
         }
     }
-
 }
 

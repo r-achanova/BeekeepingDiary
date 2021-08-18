@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Routing;
 
 namespace BeekeepingDiary.Infrastructure
 {
-
     public static class EndpointRouteBuilderExtensions
     {
         public static void MapDefaultAreaRoute(this IEndpointRouteBuilder endpoints)

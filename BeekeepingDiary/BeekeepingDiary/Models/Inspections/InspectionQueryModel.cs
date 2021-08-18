@@ -1,6 +1,4 @@
-﻿
-
-namespace BeekeepingDiary.Models.Inspections
+﻿namespace BeekeepingDiary.Models.Inspections
 {
     public class InspectionQueryModel
     {

@@ -1,9 +1,7 @@
-﻿using BeekeepingDiary.Data;
-using BeekeepingDiary.Data.Models;
-using System;
+﻿using System.Linq;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using BeekeepingDiary.Data;
+using BeekeepingDiary.Data.Models;
 
 namespace BeekeepingDiary.Services.BeeGardens
 {
@@ -101,7 +99,6 @@ namespace BeekeepingDiary.Services.BeeGardens
             return beeGardenData.Id;
         }
 
-
         public BeeGardenServiceModel Details(int id)
         => this.data
                 .BeeGardens
@@ -133,35 +130,13 @@ namespace BeekeepingDiary.Services.BeeGardens
             this.data.SaveChanges();
 
             return true;
-
         }
 
-        public bool IsByCurrentUser(int beeGardenId, string userId)
+       public bool IsByCurrentUser(int beeGardenId, string userId)
         => this.data
                 .BeeGardens
                 .Any(b => b.Id == beeGardenId && b.UserId == userId);
-
-        
-
-        /*  public IEnumerable<BeeGardenServiceModel> ByUser(string userId)
-          {
-              return GetBeeGardens(this.data
-                  .BeeGardens
-                  .Where(b => b.UserId == userId));
-              }
-
-   private static IEnumerable<BeeGardenServiceModel> GetBeeGardens(IQueryable<BeeGarden> beeGardenQuery)
-               => beeGardenQuery
-                   .Select(b => new BeeGardenServiceModel
-                   {
-                    Id = b.Id,
-                    Name = b.Name,
-                    Location = b.Location,
-                    Year = b.Year,
-                    ImageUrl = b.ImageUrl,
-                   })
-                   .ToList();
-              */
+      
     }
     }
 

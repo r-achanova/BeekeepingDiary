@@ -92,5 +92,74 @@ namespace BeekeepingDiary.Tests.Sevices
             Assert.Equal(BeeGardenUserId, result.UserId);
         }
 
+        [Fact]
+        public void IsBeeGardenServiceAllCorrect()
+        {
+
+            //Arrange
+            var data = DatabaseMock.Instance;
+
+            var beeGardenService = new BeeGardenService(data);
+
+            var beeGardeOne = beeGardenService.Create(
+               BeeGardenName,
+               BeeGardenLocation,
+               BeeGardenImageUrl,
+               BeeGardenYear,
+               BeeGardenUserId);
+            var beeGardenTwo = beeGardenService.Create(
+                NewBeeGardenName,
+                BeeGardenLocation,
+                BeeGardenImageUrl,
+                BeeGardenYear,
+                BeeGardenUserId);
+
+            //Act
+
+            var result = beeGardenService.All();
+            //Assert
+            Assert.NotNull(result);
+
+            Assert.IsType<BeeGardenQueryServiceModel>(result);
+
+            Assert.Equal(2, result.BeeGardens.Count());
+
+            Assert.Equal(result.TotalBeeGardens, result.BeeGardens.Count());
+        }
+
+        [Fact]
+        public void BeeGardenServiceAllForUserCorrect()
+        {
+
+            //Arrange
+            var data = DatabaseMock.Instance;
+
+            var beeGardenService = new BeeGardenService(data);
+
+            var beeGardeOne = beeGardenService.Create(
+               BeeGardenName,
+               BeeGardenLocation,
+               BeeGardenImageUrl,
+               BeeGardenYear,
+               BeeGardenUserId);
+            var beeGardenTwo = beeGardenService.Create(
+                NewBeeGardenName,
+                BeeGardenLocation,
+                BeeGardenImageUrl,
+                BeeGardenYear,
+                BeeGardenUserId);
+
+            //Act
+
+            var result = beeGardenService.AllForUser(1, 1, BeeGardenUserId);
+            //Assert
+            Assert.NotNull(result);
+
+            Assert.IsType<BeeGardenQueryServiceModel>(result);
+
+            Assert.Single(result.BeeGardens);
+
+            Assert.Equal(2, result.TotalBeeGardens);
+        }
     }
 }

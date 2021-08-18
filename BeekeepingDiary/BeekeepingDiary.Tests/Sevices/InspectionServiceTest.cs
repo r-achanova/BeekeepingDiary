@@ -20,8 +20,8 @@ namespace BeekeepingDiary.Tests.Sevices
         private const int CategoryId = 1;
         private const string ImageUrl = "ImageUrlTest";
         private const int Year = 2020;
-        
-        private const string BeeGardenName = "BeeGardenNameTest"; 
+
+        private const string BeeGardenName = "BeeGardenNameTest";
         private const string BeeGardenLocation = "LocationTest";
         private const string BeeGardenImageUrl = "ImageUrlTest";
         private const int BeeGardenYear = 2020;
@@ -85,29 +85,10 @@ namespace BeekeepingDiary.Tests.Sevices
             //Arrange
             var data = DatabaseMock.Instance;
             var beeGardenService = new BeeGardenService(data);
-
-            var beeGardenId = beeGardenService.Create(
-                BeeGardenName,
-                BeeGardenLocation,
-                BeeGardenImageUrl,
-                BeeGardenYear,
-                BeeGardenUserId);
-
             var beehiveService = new BeehiveService(data);
-
-            var beehiveId = beehiveService.Create(
-                 Name,
-                 ImageUrl,
-                 Year,
-                 CategoryId,
-                 beeGardenId
-                 );
             var inspectionService = new InspectionService(data);
-            var inspectionId = inspectionService.Create(
-                date,
-                beehiveId,
-                Description
-                );
+            var beehiveId = CreateBeeGardenWithBeehive(beeGardenService, beehiveService);
+            var inspectionId = CreateInspection(beehiveId, inspectionService);
 
             //Act
             var result = inspectionService.Details(
@@ -126,29 +107,10 @@ namespace BeekeepingDiary.Tests.Sevices
             //Arrange
             var data = DatabaseMock.Instance;
             var beeGardenService = new BeeGardenService(data);
-
-            var beeGardenId = beeGardenService.Create(
-                BeeGardenName,
-                BeeGardenLocation,
-                BeeGardenImageUrl,
-                BeeGardenYear,
-                BeeGardenUserId);
-
             var beehiveService = new BeehiveService(data);
-
-            var beehiveId = beehiveService.Create(
-                 Name,
-                 ImageUrl,
-                 Year,
-                 CategoryId,
-                 beeGardenId
-                 );
             var inspectionService = new InspectionService(data);
-            var inspectionId = inspectionService.Create(
-                date,
-                beehiveId,
-                Description
-                );
+            var beehiveId = CreateBeeGardenWithBeehive(beeGardenService, beehiveService);
+            var inspectionId = CreateInspection(beehiveId, inspectionService);
 
             //Act
             var result = inspectionService.Delete(inspectionId);
@@ -157,6 +119,63 @@ namespace BeekeepingDiary.Tests.Sevices
             //Assert
             Assert.True(result);
             Assert.Null(currentInspection);
+        }
+
+        [Fact]
+        public void InspectionServiceAllCorrect()
+        {
+
+            //Arrange
+            var data = DatabaseMock.Instance;
+            var beeGardenService = new BeeGardenService(data);
+            var beehiveService = new BeehiveService(data);
+            var inspectionService = new InspectionService(data);
+            var beehiveId = CreateBeeGardenWithBeehive(beeGardenService, beehiveService);
+            var inspectionId = CreateInspection(beehiveId, inspectionService);
+
+            //Act
+
+            var result = inspectionService.All(BeeGardenUserId, beehiveId);
+            //Assert
+            Assert.NotNull(result);
+
+            Assert.IsType<InspectionQueryServiceModel>(result);
+
+            Assert.Single(result.Inspections);
+        }
+
+
+        private int CreateBeeGardenWithBeehive(
+            BeeGardenService beeGardenService,
+            BeehiveService beehiveService)
+        {
+            var beeGardenId = beeGardenService.Create(
+                BeeGardenName,
+                BeeGardenLocation,
+                BeeGardenImageUrl,
+                BeeGardenYear,
+                BeeGardenUserId);
+
+            var beehiveId = beehiveService.Create(
+                 Name,
+                 ImageUrl,
+                 Year,
+                 CategoryId,
+                 beeGardenId
+                 );
+
+            return beehiveId;
+        }
+        private int CreateInspection(
+            int beehiveId,
+            InspectionService inspectionService)
+        {
+            var inspectionId = inspectionService.Create(
+                date,
+                beehiveId,
+                Description
+                );
+            return inspectionId;
         }
     }
 }

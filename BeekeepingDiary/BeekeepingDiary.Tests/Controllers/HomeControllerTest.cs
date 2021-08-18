@@ -41,11 +41,18 @@ namespace BeekeepingDiary.Tests.Controllers
                 .View();
 
         [Fact]
-        public void ErrorShouldBeMapped()
+        public void ErrorRouteShouldBeMapped()
             => MyRouting
                 .Configuration()
                 .ShouldMap("/Home/Error")
                 .To<HomeController>(c => c.Error());
+
+        [Fact]
+        public void IndexRouteShouldBeMapped()
+            => MyRouting
+                .Configuration()
+                .ShouldMap("/")
+                .To<HomeController>(c => c.Index());
 
         [Fact]
         public void IndexActionShouldReturnView()

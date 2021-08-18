@@ -27,7 +27,7 @@ namespace BeekeepingDiary.Services.BeeGardens
                 Location = b.Location,
                 Year = b.Year,
                 ImageUrl = b.ImageUrl,
-                UserId = b.ApplicationUser.UserName // todo update
+                UserId = b.ApplicationUser.UserName 
             })
             .ToList();
 

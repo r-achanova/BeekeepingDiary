@@ -12,14 +12,30 @@ using Xunit;
 
 namespace BeekeepingDiary.Tests.Controllers
 {
-   public class BeeGardensControllerTest
+    public class BeeGardensControllerTest
     {
         [Fact]
-        public void DetailsShouldBeMapped()
+        public void DetailsRouteShouldBeMapped()
             => MyRouting
                 .Configuration()
                 .ShouldMap("/BeeGardens/Details/1")
                 .To<BeeGardensController>(c => c.Details(1));
+
+        [Fact]
+        public void GetEditRouteShouldBeMapped()
+            => MyRouting
+                .Configuration()
+                .ShouldMap("/BeeGardens/Edit/1")
+                .To<BeeGardensController>(c => c.Edit(1));
+
+        [Fact]
+        public void PostEditRouteShouldBeMapped()
+          => MyRouting
+              .Configuration()
+              .ShouldMap(request => request
+              .WithPath("/BeeGardens/Edit/1")
+              .WithMethod(HttpMethod.Post))
+              .To<BeeGardensController>(c => c.Edit(1));
 
         [Fact]
         public void AddShouldBeForAuthorizedUsersAndReturnView()
@@ -34,17 +50,28 @@ namespace BeekeepingDiary.Tests.Controllers
                 .View();
 
         [Fact]
-        public void RouteTestAdd()
+        public void GetAddRouteShouldBeMapped()
             => MyRouting
             .Configuration()
             .ShouldMap("/BeeGardens/Add")
             .To<BeeGardensController>(x => x.Add());
 
         [Fact]
+        public void PostAddRouteShouldBeMapped()
+          => MyRouting
+              .Configuration()
+              .ShouldMap(request => request
+              .WithPath("/BeeGardens/Add")
+              .WithMethod(HttpMethod.Post))
+              .To<BeeGardensController>(c => c.Add(With.Any<BeeGardenFormModel>()));
+
+
+
+        [Fact]
         public void AddRoutingTestAndShouldBeForAuthorizedUsersAndReturnView()
             => MyMvc
             .Pipeline()
-            .ShouldMap(request=>request
+            .ShouldMap(request => request
                .WithPath("/BeeGardens/Add")
             .WithUser())
             .To<BeeGardensController>(x => x.Add())
@@ -57,12 +84,19 @@ namespace BeekeepingDiary.Tests.Controllers
             .View();
 
         [Fact]
-        public void PostAddBeeGardenShouldBeMapped()
-            => MyRouting
-                .Configuration().ShouldMap(request => request
-                                       .WithPath("/BeeGardens/Add")
-                                       .WithMethod(HttpMethod.Post))
-                .To<BeeGardensController>(c => c.Add(With.Any<BeeGardenFormModel>()));
+        public void GetEditShouldBeForAuthorizedUsersAndReturnView()
+        => MyController<BeeGardensController>
+                .Instance()
+                .WithUser()
+                .WithData(new BeeGarden { Id = 1, UserId = "TestId" })
+                .Calling(c => c.Edit(1))
+                .ShouldHave()
+                .ActionAttributes(attributes => attributes
+                    .RestrictingForAuthorizedRequests())
+                .AndAlso()
+                .ShouldReturn()
+                .View();
+
 
         [Theory]
         [InlineData("BeeGarden-1", "Pernik", "http://ImageUrlTest", 2012)]
@@ -90,7 +124,5 @@ namespace BeekeepingDiary.Tests.Controllers
                             x.ImageUrl == imageUrl &&
                             x.Year == year &&
                             x.UserId == TestUser.Identifier)));
-
-
     }
 }

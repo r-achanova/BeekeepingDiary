@@ -132,5 +132,53 @@ namespace BeekeepingDiary.Tests.Sevices
             //Assert
             Assert.Null(result);
         }
+
+        [Fact]
+        public void BeehiveServiceAllCorrect()
+        {
+
+            //Arrange
+            var data = DatabaseMock.Instance;
+
+            var beeGardenService = new BeeGardenService(data);
+
+            var beeGardenId = beeGardenService.Create(
+                BeeGardenName,
+                BeeGardenLocation,
+                BeeGardenImageUrl,
+                BeeGardenYear,
+                BeeGardenUserId);
+
+            var beehiveService = new BeehiveService(data);
+
+            var beehiveIdOne = beehiveService.Create(
+                 Name,
+                 ImageUrl,
+                 Year,
+                 CategoryId,
+                 beeGardenId
+                 );
+
+            var beehiveIdTwo = beehiveService.Create(
+                 NewName,
+                 ImageUrl,
+                 Year,
+                 CategoryId,
+                 beeGardenId
+                 );
+
+
+            //Act
+
+            var result = beehiveService.All(1, 1, BeeGardenUserId, beeGardenId);
+            //Assert
+            Assert.NotNull(result);
+
+            Assert.IsType<BeehiveQueryServiceModel>(result);
+
+            Assert.Single(result.Beehives);
+
+            Assert.Equal(2, result.TotalBeehives);
+        }
     }
 }

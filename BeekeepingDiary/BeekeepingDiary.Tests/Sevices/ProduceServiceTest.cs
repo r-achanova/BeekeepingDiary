@@ -97,32 +97,10 @@ namespace BeekeepingDiary.Tests.Sevices
             //Arrange
             var data = DatabaseMock.Instance;
             var beeGardenService = new BeeGardenService(data);
-
-            var beeGardenId = beeGardenService.Create(
-                BeeGardenName,
-                BeeGardenLocation,
-                BeeGardenImageUrl,
-                BeeGardenYear,
-                BeeGardenUserId);
-
             var beehiveService = new BeehiveService(data);
-
-            var beehiveId = beehiveService.Create(
-                 Name,
-                 ImageUrl,
-                 Year,
-                 CategoryId,
-                 beeGardenId
-                 );
-
+            var beehiveId = CreateBeeGardenWithBeehive(beeGardenService, beehiveService);
             var produceService = new ProduceService(data);
-            var produceId = produceService.Create(
-                date,
-                beehiveId,
-                HoneyKg,
-                HoneyType,
-                Notes
-                );
+            var produceId = CreateProduce(beehiveId, produceService);
 
             //Act
             var result = produceService.Details(
@@ -142,33 +120,10 @@ namespace BeekeepingDiary.Tests.Sevices
             //Arrange
             var data = DatabaseMock.Instance;
             var beeGardenService = new BeeGardenService(data);
-
-            var beeGardenId = beeGardenService.Create(
-                BeeGardenName,
-                BeeGardenLocation,
-                BeeGardenImageUrl,
-                BeeGardenYear,
-                BeeGardenUserId);
-
             var beehiveService = new BeehiveService(data);
-
-            var beehiveId = beehiveService.Create(
-                 Name,
-                 ImageUrl,
-                 Year,
-                 CategoryId,
-                 beeGardenId
-                 );
-
+            var beehiveId = CreateBeeGardenWithBeehive(beeGardenService, beehiveService);
             var produceService = new ProduceService(data);
-            var produceId = produceService.Create(
-                date,
-                beehiveId,
-                HoneyKg,
-                HoneyType,
-                Notes
-                );
-
+            var produceId = CreateProduce(beehiveId, produceService);
 
             //Act
             var result = produceService.Delete(produceId); 
@@ -178,6 +133,65 @@ namespace BeekeepingDiary.Tests.Sevices
             Assert.True(result);
             Assert.Null(currentProduce);
           }
+
+        [Fact]
+        public void ProduceServiceAllCorrect()
+        {
+
+            //Arrange
+            var data = DatabaseMock.Instance;
+            var beeGardenService = new BeeGardenService(data);
+            var beehiveService = new BeehiveService(data);
+            var beehiveId = CreateBeeGardenWithBeehive(beeGardenService, beehiveService);
+            var produceService = new ProduceService(data);
+            var produceIdOne = CreateProduce(beehiveId, produceService);
+            var produceIdTwo = CreateProduce(beehiveId, produceService);
+
+            //Act
+
+            var result = produceService.All(BeeGardenUserId, beehiveId);
+            //Assert
+            Assert.NotNull(result);
+
+            Assert.IsType<ProduceQueryServiceModel>(result);
+
+            Assert.Equal(2, result.Produces.Count());
+        }
+
+        private int CreateBeeGardenWithBeehive(
+            BeeGardenService beeGardenService,
+            BeehiveService beehiveService)
+        {
+            var beeGardenId = beeGardenService.Create(
+                BeeGardenName,
+                BeeGardenLocation,
+                BeeGardenImageUrl,
+                BeeGardenYear,
+                BeeGardenUserId);
+
+            var beehiveId = beehiveService.Create(
+                 Name,
+                 ImageUrl,
+                 Year,
+                 CategoryId,
+                 beeGardenId
+                 );
+
+            return beehiveId;
+        }
+        private int CreateProduce(
+            int beehiveId,
+            ProduceService produceService)
+        {
+            var produceId = produceService.Create(
+                date,
+                beehiveId,
+                HoneyKg,
+                HoneyType,
+                Notes
+                );
+            return produceId;
+        }
 
     }
 }

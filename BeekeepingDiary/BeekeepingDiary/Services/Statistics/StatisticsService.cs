@@ -1,5 +1,5 @@
-﻿using System.Linq;
-using BeekeepingDiary.Data;
+﻿using BeekeepingDiary.Data;
+using System.Linq;
 
 namespace BeekeepingDiary.Services.Statistics
 {

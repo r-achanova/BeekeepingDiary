@@ -1,17 +1,12 @@
 ﻿using BeekeepingDiary.Data.Models;
-using BeekeepingDiary.Services.BeeGardens;
 using BeekeepingDiary.Services.Statistics;
 using BeekeepingDiary.Tests.Mocs;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BeekeepingDiary.Tests.Sevices
 {
-   public class StatisticsServiceTest
+    public class StatisticsServiceTest
     {
         private const string BeeGardenName = "BeeGardenNameTest";
         private const string BeeGardenLocation = "LocationTest";

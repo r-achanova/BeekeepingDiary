@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using BeekeepingDiary.Infrastructure;
+﻿using BeekeepingDiary.Infrastructure;
 using BeekeepingDiary.Models.Beehives;
 using BeekeepingDiary.Services.Beehives;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BeekeepingDiary.Controllers
 {

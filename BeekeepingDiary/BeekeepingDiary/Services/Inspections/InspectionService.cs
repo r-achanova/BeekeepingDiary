@@ -1,8 +1,8 @@
-﻿using System;
+﻿using BeekeepingDiary.Data;
+using BeekeepingDiary.Data.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using BeekeepingDiary.Data;
-using BeekeepingDiary.Data.Models;
 
 namespace BeekeepingDiary.Services.Inspections
 {

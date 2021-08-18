@@ -1,9 +1,9 @@
-﻿using System;
-using System.Linq;
-using BeekeepingDiary.Services.BeeGardens;
+﻿using BeekeepingDiary.Services.BeeGardens;
 using BeekeepingDiary.Services.Beehives;
 using BeekeepingDiary.Services.Produces;
 using BeekeepingDiary.Tests.Mocs;
+using System;
+using System.Linq;
 using Xunit;
 
 namespace BeekeepingDiary.Tests.Sevices

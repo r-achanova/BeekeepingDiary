@@ -3,14 +3,9 @@ using BeekeepingDiary.Data.Models;
 using BeekeepingDiary.Services.BeeGardens;
 using BeekeepingDiary.Services.Statistics;
 using BeekeepingDiary.Tests.Mocs;
-using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using MyTested.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace BeekeepingDiary.Tests.Controllers

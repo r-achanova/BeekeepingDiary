@@ -1,10 +1,6 @@
 ﻿using BeekeepingDiary.Controllers;
 using BeekeepingDiary.Data.Models;
 using BeekeepingDiary.Models.BeeGardens;
-using BeekeepingDiary.Models.Beehives;
-using BeekeepingDiary.Services.BeeGardens;
-using BeekeepingDiary.Tests.Mocs;
-using Microsoft.AspNetCore.Mvc;
 using MyTested.AspNetCore.Mvc;
 using System.Linq;
 using Xunit;

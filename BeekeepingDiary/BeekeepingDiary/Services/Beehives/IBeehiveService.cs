@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace BeekeepingDiary.Services.Beehives
 {
-   public interface IBeehiveService
+    public interface IBeehiveService
     {
         BeehiveQueryServiceModel All(
             int currentPage,

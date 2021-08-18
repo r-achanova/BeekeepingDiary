@@ -1,7 +1,7 @@
-﻿using System.Linq;
-using System.Collections.Generic;
-using BeekeepingDiary.Data;
+﻿using BeekeepingDiary.Data;
 using BeekeepingDiary.Data.Models;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BeekeepingDiary.Services.Beehives
 {

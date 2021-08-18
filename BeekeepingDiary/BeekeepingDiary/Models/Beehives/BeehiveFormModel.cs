@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BeekeepingDiary.Services.Beehives;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using static BeekeepingDiary.Data.DataConstants.Beehive;
-using BeekeepingDiary.Services.Beehives;
 
 namespace BeekeepingDiary.Models.Beehives
 {

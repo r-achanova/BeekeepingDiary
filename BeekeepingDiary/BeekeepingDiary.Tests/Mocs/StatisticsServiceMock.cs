@@ -1,14 +1,9 @@
 ﻿using BeekeepingDiary.Services.Statistics;
 using Moq;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace BeekeepingDiary.Tests.Mocs
 {
-   public class StatisticsServiceMock
+    public class StatisticsServiceMock
     {
         public static IStatisticsService Instance
         {

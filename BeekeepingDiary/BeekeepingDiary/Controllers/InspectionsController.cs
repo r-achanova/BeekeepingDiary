@@ -1,10 +1,10 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
+﻿using BeekeepingDiary.Infrastructure;
+using BeekeepingDiary.Models.Inspections;
 using BeekeepingDiary.Services.Beehives;
 using BeekeepingDiary.Services.Inspections;
-using BeekeepingDiary.Infrastructure;
-using BeekeepingDiary.Models.Inspections;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace BeekeepingDiary.Controllers
 {

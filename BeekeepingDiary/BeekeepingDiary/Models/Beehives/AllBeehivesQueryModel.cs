@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using BeekeepingDiary.Services.Beehives;
+﻿using BeekeepingDiary.Services.Beehives;
+using System.Collections.Generic;
 
 namespace BeekeepingDiary.Models.Beehives
 {

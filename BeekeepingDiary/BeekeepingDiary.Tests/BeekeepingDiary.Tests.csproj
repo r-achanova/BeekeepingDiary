@@ -28,4 +28,8 @@
     <ProjectReference Include="..\BeekeepingDiary\BeekeepingDiary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sandbox\" />
+  </ItemGroup>
+
 </Project>

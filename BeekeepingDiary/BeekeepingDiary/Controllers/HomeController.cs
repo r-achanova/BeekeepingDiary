@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using BeekeepingDiary.Services.BeeGardens;
+﻿using BeekeepingDiary.Services.BeeGardens;
 using BeekeepingDiary.Services.Statistics;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BeekeepingDiary.Controllers
 {

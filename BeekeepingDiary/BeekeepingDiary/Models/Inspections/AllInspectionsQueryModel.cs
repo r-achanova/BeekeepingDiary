@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using BeekeepingDiary.Services.Inspections;
+﻿using BeekeepingDiary.Services.Inspections;
+using System.Collections.Generic;
 
 
 namespace BeekeepingDiary.Models.Inspections
